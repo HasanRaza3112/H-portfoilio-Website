@@ -1,46 +1,59 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { EngineeringDetail } from "@/features/engineering/components/EngineeringDetail";
+import { EngineeringDetailView } from "@/features/engineering";
+import { EngineeringJsonLd } from "@/features/engineering/components/engineering-json-ld";
+import { ContentViewTracker } from "@/components/shared/content-view-tracker";
 import {
-  getEngineeringArticleBySlug,
-  getEngineeringSlugs,
-} from "@/features/engineering/api";
+  getCachedEngineeringLogBySlug,
+  getCachedEngineeringLogSlugs,
+  getCachedSiteSettings,
+} from "@/features/engineering/lib/engineering-data";
+import { buildEngineeringDetailMetadata } from "@/lib/seo";
 
-interface EngineeringDetailProps {
+interface EngineeringArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  const slugs = await getEngineeringSlugs();
+  const slugs = await getCachedEngineeringLogSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
-}: EngineeringDetailProps): Promise<Metadata> {
+}: EngineeringArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = await getEngineeringArticleBySlug(slug);
+  const [log, siteSettings] = await Promise.all([
+    getCachedEngineeringLogBySlug(slug),
+    getCachedSiteSettings(),
+  ]);
 
-  if (!article) {
+  if (!log) {
     return { title: "Article Not Found" };
   }
 
-  return {
-    title: article.title,
-    description: article.summary,
-  };
+  return buildEngineeringDetailMetadata(log, siteSettings);
 }
 
-export default async function EngineeringDetailPage({
+export default async function EngineeringArticlePage({
   params,
-}: EngineeringDetailProps) {
+}: EngineeringArticlePageProps) {
   const { slug } = await params;
-  const article = await getEngineeringArticleBySlug(slug);
+  const [log, siteSettings] = await Promise.all([
+    getCachedEngineeringLogBySlug(slug),
+    getCachedSiteSettings(),
+  ]);
 
-  if (!article) {
+  if (!log) {
     notFound();
   }
 
-  return <EngineeringDetail article={article} />;
+  return (
+    <>
+      <ContentViewTracker event="engineering_view" slug={log.slug} />
+      <EngineeringJsonLd log={log} siteSettings={siteSettings} />
+      <EngineeringDetailView log={log} />
+    </>
+  );
 }

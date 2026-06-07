@@ -1,22 +1,32 @@
 import Link from "next/link";
 
-import { Container } from "@/components/shared/Container";
+import { Button } from "@/components/ui/button";
+import { Container } from "@/components/layout/container";
+import { Heading } from "@/components/ui/heading";
+import { buildNotFoundMetadata } from "@/lib/seo";
 
-export default function NotFoundPage() {
+export const metadata = buildNotFoundMetadata();
+
+export default function NotFound() {
   return (
-    <Container className="flex min-h-[50vh] flex-col items-center justify-center py-20 text-center">
-      <p className="font-mono text-xs uppercase tracking-widest text-primary">
+    <Container className="flex min-h-[60vh] flex-col items-center justify-center py-section-lg text-center">
+      <Heading variant="overline" tone="accent">
         404
-      </p>
-      <h1 className="mt-4 text-2xl font-semibold text-foreground">
+      </Heading>
+      <Heading variant="h1" as="h1" className="mt-3">
         Page not found
-      </h1>
-      <p className="mt-2 text-muted-foreground">
-        The page you&apos;re looking for doesn&apos;t exist.
+      </Heading>
+      <p className="mt-4 max-w-md text-body-lg text-muted text-pretty">
+        The page you are looking for may have moved or no longer exists.
       </p>
-      <Link href="/" className="mt-6 text-sm text-primary hover:underline">
-        ← Back to home
-      </Link>
+      <div className="mt-8 flex flex-wrap justify-center gap-3">
+        <Button asChild>
+          <Link href="/">Back to home</Link>
+        </Button>
+        <Button asChild variant="outline">
+          <Link href="/contact">Contact</Link>
+        </Button>
+      </div>
     </Container>
   );
 }

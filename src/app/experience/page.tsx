@@ -1,20 +1,29 @@
 import type { Metadata } from "next";
 
-import { ExperienceTimeline } from "@/features/experience/components/ExperienceTimeline";
-import { getExperience } from "@/features/experience/api";
-import { getSiteSettings } from "@/features/site/api";
+import { ExperiencePageView } from "@/features/experience";
+import { ExperienceJsonLd } from "@/features/experience/components/experience-json-ld";
+import {
+  getCachedExperienceList,
+  getCachedPersonProfile,
+} from "@/features/experience/lib/experience-data";
+import { getCachedSiteSettings } from "@/features/home/lib/home-data";
+import { buildExperiencePageMetadata } from "@/lib/seo";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = await getSiteSettings();
-
-  return {
-    title: "Experience",
-    description: `Professional experience and accomplishments — ${settings.name}.`,
-  };
+  const siteSettings = await getCachedSiteSettings();
+  return buildExperiencePageMetadata(siteSettings);
 }
 
 export default async function ExperiencePage() {
-  const experience = await getExperience();
+  const [experiences, profile] = await Promise.all([
+    getCachedExperienceList(),
+    getCachedPersonProfile(),
+  ]);
 
-  return <ExperienceTimeline experience={experience} />;
+  return (
+    <>
+      <ExperienceJsonLd experiences={experiences} />
+      <ExperiencePageView experiences={experiences} profile={profile} />
+    </>
+  );
 }

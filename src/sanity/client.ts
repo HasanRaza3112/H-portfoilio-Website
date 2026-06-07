@@ -1,23 +1,53 @@
-import { createClient, type SanityClient } from "next-sanity";
+import { createClient, type SanityClient } from "@sanity/client";
 
-import { isSanityConfigured, sanityConfig } from "./env";
+import { getServerEnv } from "@/lib/env";
+import { isSanityConfigured } from "@/lib/env";
+import { sanityConfig } from "@/sanity/env";
 
-let client: SanityClient | null = null;
+let publishedClient: SanityClient | null = null;
+let previewClient: SanityClient | null = null;
 
-export function getSanityClient(): SanityClient | null {
-  if (!isSanityConfigured) {
+function createPublishedClient(): SanityClient {
+  return createClient({
+    projectId: sanityConfig.projectId,
+    dataset: sanityConfig.dataset,
+    apiVersion: sanityConfig.apiVersion,
+    useCdn: sanityConfig.useCdn,
+    perspective: "published",
+  });
+}
+
+function createPreviewClient(token: string): SanityClient {
+  return createClient({
+    projectId: sanityConfig.projectId,
+    dataset: sanityConfig.dataset,
+    apiVersion: sanityConfig.apiVersion,
+    useCdn: false,
+    token,
+    perspective: "previewDrafts",
+  });
+}
+
+/**
+ * Lazy Sanity client — safe to import during build without CMS credentials.
+ * Use `{ preview: true }` for draft content (requires SANITY_API_READ_TOKEN).
+ */
+export function getSanityClient(options?: { preview?: boolean }): SanityClient | null {
+  if (!isSanityConfigured()) {
     return null;
   }
 
-  if (!client) {
-    client = createClient({
-      ...sanityConfig,
-      stega: {
-        enabled: false,
-        studioUrl: "/studio",
-      },
-    });
+  if (options?.preview) {
+    const token = getServerEnv().SANITY_API_READ_TOKEN;
+    if (!token) {
+      console.error("[getSanityClient] Preview requested but SANITY_API_READ_TOKEN is missing");
+      return null;
+    }
+
+    previewClient ??= createPreviewClient(token);
+    return previewClient;
   }
 
-  return client;
+  publishedClient ??= createPublishedClient();
+  return publishedClient;
 }

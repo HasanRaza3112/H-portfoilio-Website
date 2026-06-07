@@ -1,62 +1,44 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
-import { getSiteSettings } from "@/features/site/api";
-import { BRAND } from "@/lib/constants";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { SiteFooter } from "@/components/layout/site-footer";
+import { SiteHeader } from "@/components/layout/site-header";
+import { fontVariables } from "@/lib/fonts";
+import { buildRootMetadata } from "@/lib/seo";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+export const metadata: Metadata = buildRootMetadata();
 
-export async function generateMetadata(): Promise<Metadata> {
-  const settings = await getSiteSettings();
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0b0d11",
+};
 
-  return {
-    metadataBase: new URL(BRAND.siteUrl),
-    title: {
-      default: `${settings.name} — ${settings.title}`,
-      template: `%s — ${settings.name}`,
-    },
-    description: settings.tagline,
-    openGraph: {
-      title: `${settings.name} — ${settings.title}`,
-      description: settings.tagline,
-      type: "website",
-      url: BRAND.siteUrl,
-    },
-    robots: {
-      index: true,
-      follow: true,
-    },
-  };
-}
-
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = await getSiteSettings();
-
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="flex min-h-full flex-col">
-        <Header settings={settings} />
-        <main className="flex-1">{children}</main>
-        <Footer settings={settings} />
+    <html lang="en" className={fontVariables}>
+      <head>
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+      </head>
+      <body className="min-h-screen antialiased">
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-foreground"
+        >
+          Skip to main content
+        </a>
+        <SiteHeader />
+        <main id="main-content">{children}</main>
+        <SiteFooter />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

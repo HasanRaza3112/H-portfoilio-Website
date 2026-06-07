@@ -1,39 +1,32 @@
-import { CareerTimeline } from "@/features/home/components/CareerTimeline";
-import { ContactCTA } from "@/features/home/components/ContactCTA";
-import { CurrentMission } from "@/features/home/components/CurrentMission";
-import { EngineeringFocus } from "@/features/home/components/EngineeringFocus";
-import { FeaturedProjects } from "@/features/home/components/FeaturedProjects";
-import { Hero } from "@/features/home/components/Hero";
-import { LatestDevlogs } from "@/features/home/components/LatestDevlogs";
-import { getLatestDevlogs } from "@/features/devlogs/api";
-import { getEngineeringArticles } from "@/features/engineering/api";
-import { getExperience } from "@/features/experience/api";
-import { getFeaturedProjects } from "@/features/projects/api";
+import type { Metadata } from "next";
+
+import { HomeJsonLd } from "@/features/home/components/home-json-ld";
+import { HomePageView } from "@/features/home";
 import {
-  getCurrentMission,
-  getSiteSettings,
-} from "@/features/site/api";
+  getCachedHomePageData,
+  getCachedSiteSettings,
+} from "@/features/home/lib/home-data";
+import { buildHomeMetadata } from "@/lib/seo";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const [data, siteSettings] = await Promise.all([
+    getCachedHomePageData(),
+    getCachedSiteSettings(),
+  ]);
+
+  return buildHomeMetadata(data, siteSettings);
+}
 
 export default async function HomePage() {
-  const [settings, missions, projects, articles, experience, devlogs] =
-    await Promise.all([
-      getSiteSettings(),
-      getCurrentMission(),
-      getFeaturedProjects(),
-      getEngineeringArticles(),
-      getExperience(),
-      getLatestDevlogs(),
-    ]);
+  const [data, siteSettings] = await Promise.all([
+    getCachedHomePageData(),
+    getCachedSiteSettings(),
+  ]);
 
   return (
     <>
-      <Hero settings={settings} />
-      <CurrentMission missions={missions} />
-      <FeaturedProjects projects={projects} />
-      <EngineeringFocus articles={articles} />
-      <CareerTimeline experience={experience} />
-      <LatestDevlogs devlogs={devlogs} />
-      <ContactCTA settings={settings} />
+      <HomeJsonLd data={data} siteSettings={siteSettings} />
+      <HomePageView data={data} />
     </>
   );
 }

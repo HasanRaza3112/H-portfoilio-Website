@@ -1,42 +1,69 @@
 import type { z } from "zod";
+import "server-only";
 
-import { getSanityClient } from "./client";
-import { isSanityConfigured } from "./env";
+import { getSanityClient } from "@/sanity/client";
+import { defaultRevalidateSeconds } from "@/sanity/config";
+import { isPreviewMode } from "@/sanity/preview";
+import { isSanityConfigured } from "@/lib/env";
 
-interface SanityFetchOptions<T> {
+export interface SanityFetchOptions<T> {
   query: string;
   params?: Record<string, unknown>;
   schema: z.ZodType<T>;
   tags?: string[];
+  /** Override preview detection (defaults to Next.js draft mode). */
+  preview?: boolean;
+  revalidate?: number | false;
 }
 
+async function resolvePreview(explicit?: boolean): Promise<boolean> {
+  if (explicit !== undefined) {
+    return explicit;
+  }
+
+  return isPreviewMode();
+}
+
+/**
+ * Validated Sanity fetch — the only path from repositories to Sanity.
+ * Query strings live in src/sanity/queries/, never in route or feature modules.
+ */
 export async function sanityFetch<T>({
   query,
   params = {},
   schema,
   tags = [],
+  preview: previewOverride,
+  revalidate = defaultRevalidateSeconds,
 }: SanityFetchOptions<T>): Promise<T | null> {
-  if (!isSanityConfigured) {
+  if (!isSanityConfigured()) {
     return null;
   }
 
-  const client = getSanityClient();
+  const preview = await resolvePreview(previewOverride);
+  const client = getSanityClient({ preview });
 
   if (!client) {
     return null;
   }
 
   try {
-    const data = await client.fetch<T | null>(query, params, {
-      next: { tags },
-    });
+    const data = await client.fetch<T | null>(
+      query,
+      { ...params, preview },
+      {
+        next: {
+          tags,
+          ...(revalidate === false ? { revalidate: false } : { revalidate }),
+        },
+      },
+    );
 
     if (data === null || data === undefined) {
       return null;
     }
 
     const parsed = schema.safeParse(data);
-
     if (!parsed.success) {
       console.error("[sanityFetch] Validation failed:", parsed.error.flatten());
       return null;
@@ -49,27 +76,15 @@ export async function sanityFetch<T>({
   }
 }
 
-export async function sanityFetchList<T>({
-  query,
-  params = {},
-  schema,
-  tags = [],
-}: SanityFetchOptions<T[]>): Promise<T[]> {
-  const result = await sanityFetch({
-    query,
-    params,
-    schema,
-    tags,
-  });
-
+export async function sanityFetchList<T>(
+  options: SanityFetchOptions<T[]>,
+): Promise<T[]> {
+  const result = await sanityFetch(options);
   return result ?? [];
 }
 
-export async function sanityFetchRequired<T>({
-  query,
-  params = {},
-  schema,
-  tags = [],
-}: SanityFetchOptions<T>): Promise<T | null> {
-  return sanityFetch({ query, params, schema, tags });
+export async function sanityFetchRequired<T>(
+  options: SanityFetchOptions<T>,
+): Promise<T | null> {
+  return sanityFetch(options);
 }

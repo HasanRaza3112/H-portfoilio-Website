@@ -1,0 +1,12 @@
+.next
+node_modules
+package-lock.json
+dist
+build
+coverage
+public
+Project_Constitution.md
+AGENTS.md
+CLAUDE.md
+README.md
+tsconfig.tsbuildinfo

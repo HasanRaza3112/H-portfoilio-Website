@@ -1,0 +1,271 @@
+/*
+ * Mohammed Hasan Raza OS — Design Tokens (Phase 4)
+ * Dark mode only · AAA Studio + Command Center
+ * Do not hardcode values in components — reference tokens.
+ */
+
+:root {
+  color-scheme: dark;
+
+  /* ─── Color: Base ─── */
+  --background: #0b0d11;
+  --foreground: #eef0f4;
+  --surface: #12151c;
+  --surface-secondary: #181c26;
+  --surface-elevated: #1e2430;
+  --surface-overlay: #252b38;
+
+  /* ─── Color: Text ─── */
+  --text-primary: #eef0f4;
+  --text-secondary: #8b93a3;
+  --text-tertiary: #6b7280;
+  --text-muted: #b4bac6;
+
+  /* ─── Color: Accent & Status ─── */
+  --accent: #5b8def;
+  --accent-hover: #7aa3f5;
+  --accent-muted: #3d5f99;
+  --accent-foreground: #ffffff;
+  --accent-subtle: rgb(91 141 239 / 12%);
+
+  --success: #4ade80;
+  --success-subtle: rgb(74 222 128 / 12%);
+  --warning: #fbbf24;
+  --warning-subtle: rgb(251 191 36 / 12%);
+  --destructive: #ef4444;
+  --destructive-subtle: rgb(239 68 68 / 12%);
+
+  /* ─── Color: Border ─── */
+  --border: #252b38;
+  --border-subtle: #1a1f2a;
+  --border-strong: #323945;
+  --border-accent: rgb(91 141 239 / 35%);
+
+  /* ─── Typography: Families ─── */
+  --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
+  --font-mono: var(--font-geist-mono, ui-monospace, "Cascadia Code", monospace);
+
+  /* ─── Typography: Scale ─── */
+  --text-display-size: 3.5rem;
+  --text-display-height: 1.08;
+  --text-display-tracking: -0.03em;
+
+  --text-h1-size: 2.5rem;
+  --text-h1-height: 1.12;
+  --text-h1-tracking: -0.025em;
+
+  --text-h2-size: 2rem;
+  --text-h2-height: 1.15;
+  --text-h2-tracking: -0.02em;
+
+  --text-h3-size: 1.5rem;
+  --text-h3-height: 1.25;
+  --text-h3-tracking: -0.015em;
+
+  --text-h4-size: 1.25rem;
+  --text-h4-height: 1.3;
+  --text-h4-tracking: -0.01em;
+
+  --text-body-lg-size: 1.125rem;
+  --text-body-lg-height: 1.65;
+
+  --text-body-size: 1rem;
+  --text-body-height: 1.7;
+
+  --text-body-sm-size: 0.875rem;
+  --text-body-sm-height: 1.6;
+
+  --text-caption-size: 0.75rem;
+  --text-caption-height: 1.5;
+
+  --text-overline-size: 0.6875rem;
+  --text-overline-height: 1.4;
+  --text-overline-tracking: 0.12em;
+
+  /* ─── Spacing: Scale (4px base) ─── */
+  --space-0: 0;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* ─── Spacing: Semantic ─── */
+  --space-section-sm: var(--space-12);
+  --space-section-md: var(--space-16);
+  --space-section-lg: var(--space-24);
+  --space-gutter: var(--space-6);
+  --space-gutter-lg: var(--space-8);
+
+  /* ─── Container ─── */
+  --container-padding: var(--space-gutter);
+  --container-narrow: 45rem;
+  --container-content: 72rem;
+  --container-wide: 80rem;
+
+  /* ─── Border Radius ─── */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+  --radius: var(--radius-md);
+
+  /* ─── Shadows ─── */
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 40%);
+  --shadow-sm: 0 2px 8px rgb(0 0 0 / 35%);
+  --shadow-md: 0 4px 16px rgb(0 0 0 / 45%);
+  --shadow-lg: 0 8px 32px rgb(0 0 0 / 50%);
+  --shadow-panel: 0 0 0 1px var(--border-subtle),
+    0 1px 0 0 rgb(255 255 255 / 4%) inset, var(--shadow-sm);
+  --shadow-elevated: 0 0 0 1px var(--border),
+    0 1px 0 0 rgb(255 255 255 / 5%) inset, var(--shadow-md);
+  --shadow-accent: 0 0 0 1px var(--border-accent), 0 0 24px rgb(91 141 239 / 8%);
+
+  /* ─── Motion ─── */
+  --duration-instant: 100ms;
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-slower: 600ms;
+
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.6, 1);
+  --ease-emphasis: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --transition-colors: color var(--duration-fast) var(--ease-standard),
+    background-color var(--duration-fast) var(--ease-standard),
+    border-color var(--duration-fast) var(--ease-standard);
+  --transition-transform: transform var(--duration-normal) var(--ease-out);
+  --transition-opacity: opacity var(--duration-normal) var(--ease-standard);
+
+  /* ─── Focus ─── */
+  --focus-ring: 0 0 0 2px var(--background), 0 0 0 4px var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-instant: 0ms;
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
+    --duration-slower: 0ms;
+  }
+}
+
+@theme inline {
+  /* Colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-secondary: var(--surface-secondary);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-overlay: var(--surface-overlay);
+  --color-muted: var(--text-secondary);
+  --color-muted-foreground: var(--text-muted);
+  --color-primary: var(--accent);
+  --color-primary-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-muted: var(--accent-muted);
+  --color-accent-subtle: var(--accent-subtle);
+  --color-success: var(--success);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning: var(--warning);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-destructive: var(--destructive);
+  --color-destructive-subtle: var(--destructive-subtle);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-border-accent: var(--border-accent);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+
+  /* Typography */
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+
+  --text-display: var(--text-display-size);
+  --text-display--line-height: var(--text-display-height);
+  --text-display--letter-spacing: var(--text-display-tracking);
+  --text-display--font-weight: 600;
+
+  --text-h1: var(--text-h1-size);
+  --text-h1--line-height: var(--text-h1-height);
+  --text-h1--letter-spacing: var(--text-h1-tracking);
+  --text-h1--font-weight: 600;
+
+  --text-h2: var(--text-h2-size);
+  --text-h2--line-height: var(--text-h2-height);
+  --text-h2--letter-spacing: var(--text-h2-tracking);
+  --text-h2--font-weight: 600;
+
+  --text-h3: var(--text-h3-size);
+  --text-h3--line-height: var(--text-h3-height);
+  --text-h3--letter-spacing: var(--text-h3-tracking);
+  --text-h3--font-weight: 600;
+
+  --text-h4: var(--text-h4-size);
+  --text-h4--line-height: var(--text-h4-height);
+  --text-h4--letter-spacing: var(--text-h4-tracking);
+  --text-h4--font-weight: 600;
+
+  --text-body-lg: var(--text-body-lg-size);
+  --text-body-lg--line-height: var(--text-body-lg-height);
+
+  --text-body-sm: var(--text-body-sm-size);
+  --text-body-sm--line-height: var(--text-body-sm-height);
+
+  --text-caption: var(--text-caption-size);
+  --text-caption--line-height: var(--text-caption-height);
+
+  --text-overline: var(--text-overline-size);
+  --text-overline--line-height: var(--text-overline-height);
+  --text-overline--letter-spacing: var(--text-overline-tracking);
+  --text-overline--font-weight: 500;
+
+  /* Radius */
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-full: var(--radius-full);
+
+  /* Shadows */
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-panel: var(--shadow-panel);
+  --shadow-elevated: var(--shadow-elevated);
+  --shadow-accent: var(--shadow-accent);
+
+  /* Semantic spacing for utilities */
+  --spacing-section-sm: var(--space-section-sm);
+  --spacing-section-md: var(--space-section-md);
+  --spacing-section-lg: var(--space-section-lg);
+  --spacing-gutter: var(--space-gutter);
+
+  /* Breakpoints (reference) */
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+
+  /* Max widths */
+  --container-narrow: var(--container-narrow);
+  --container-content: var(--container-content);
+  --container-wide: var(--container-wide);
+}

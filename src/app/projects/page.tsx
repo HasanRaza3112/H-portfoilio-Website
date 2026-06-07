@@ -1,16 +1,54 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
-import { ProjectList } from "@/features/projects/components/ProjectList";
-import { getProjects } from "@/features/projects/api";
+import { ProjectsIndexView } from "@/features/projects";
+import { ProjectsIndexJsonLd } from "@/features/projects/components/projects-index-json-ld";
+import {
+  getCachedProjectCategories,
+  getCachedProjects,
+  getCachedSiteSettings,
+} from "@/features/projects/lib/project-data";
+import {
+  getProjectCategoriesForFilter,
+  parseProjectFilters,
+} from "@/features/projects/lib/filters";
+import { buildProjectsIndexMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Projects",
-  description:
-    "Engineering case studies across SDK development, playable ads, and gameplay systems.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const siteSettings = await getCachedSiteSettings();
+  return buildProjectsIndexMetadata(siteSettings);
+}
 
-export default async function ProjectsPage() {
-  const projects = await getProjects();
+export default async function ProjectsPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = await searchParams;
+  const filters = parseProjectFilters(params);
+  const [projects, categories] = await Promise.all([
+    getCachedProjects(),
+    getCachedProjectCategories(),
+  ]);
 
-  return <ProjectList projects={projects} />;
+  const projectCategories = getProjectCategoriesForFilter(categories);
+
+  return (
+    <>
+      <ProjectsIndexJsonLd projects={projects} />
+      <Suspense
+      fallback={
+        <div className="mx-auto max-w-container-content px-[var(--container-padding)] py-section-md text-muted">
+          Loading projects…
+        </div>
+      }
+    >
+      <ProjectsIndexView
+        projects={projects}
+        categories={projectCategories}
+        filters={filters}
+      />
+      </Suspense>
+    </>
+  );
 }

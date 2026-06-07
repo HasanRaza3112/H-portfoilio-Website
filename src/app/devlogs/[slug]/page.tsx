@@ -1,15 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { DevlogDetail } from "@/features/devlogs/components/DevlogDetail";
-import { getDevlogBySlug, getDevlogSlugs } from "@/features/devlogs/api";
+import { DevlogDetailView } from "@/features/devlogs";
+import { DevlogJsonLd } from "@/features/devlogs/components/devlog-json-ld";
+import {
+  getCachedDevlogBySlug,
+  getCachedDevlogSlugs,
+  getCachedDevlogs,
+  getCachedSiteSettings,
+} from "@/features/devlogs/lib/devlog-data";
+import { buildDevlogDetailMetadata } from "@/lib/seo";
 
 interface DevlogPageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
-  const slugs = await getDevlogSlugs();
+  const slugs = await getCachedDevlogSlugs();
   return slugs.map((slug) => ({ slug }));
 }
 
@@ -17,25 +24,34 @@ export async function generateMetadata({
   params,
 }: DevlogPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const post = await getDevlogBySlug(slug);
+  const [devlog, siteSettings] = await Promise.all([
+    getCachedDevlogBySlug(slug),
+    getCachedSiteSettings(),
+  ]);
 
-  if (!post) {
-    return { title: "Devlog Not Found" };
+  if (!devlog) {
+    return { title: "Entry Not Found" };
   }
 
-  return {
-    title: post.title,
-    description: post.summary,
-  };
+  return buildDevlogDetailMetadata(devlog, siteSettings);
 }
 
-export default async function DevlogDetailPage({ params }: DevlogPageProps) {
+export default async function DevlogPage({ params }: DevlogPageProps) {
   const { slug } = await params;
-  const post = await getDevlogBySlug(slug);
+  const [devlog, allDevlogs, siteSettings] = await Promise.all([
+    getCachedDevlogBySlug(slug),
+    getCachedDevlogs(),
+    getCachedSiteSettings(),
+  ]);
 
-  if (!post) {
+  if (!devlog) {
     notFound();
   }
 
-  return <DevlogDetail post={post} />;
+  return (
+    <>
+      <DevlogJsonLd devlog={devlog} siteSettings={siteSettings} />
+      <DevlogDetailView devlog={devlog} allDevlogs={allDevlogs} />
+    </>
+  );
 }
