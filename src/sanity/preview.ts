@@ -4,8 +4,13 @@ import { getClientEnv } from "@/lib/env";
 import { documentTypes, sanityTags, singletonIds } from "@/sanity/env";
 
 export async function isPreviewMode(): Promise<boolean> {
-  const { isEnabled } = await draftMode();
-  return isEnabled;
+  try {
+    const { isEnabled } = await draftMode();
+    return isEnabled;
+  } catch {
+    // draftMode() is unavailable during static generation (e.g. generateStaticParams).
+    return false;
+  }
 }
 
 export function resolvePreviewPath(
