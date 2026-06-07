@@ -12,6 +12,7 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
     "typegen": "sanity schema extract --path=./sanity/extract.json && sanity typegen generate",
+    "seed:phase-1-2": "tsx scripts/seed-phase-1-2.ts",
     "studio": "sanity dev"
   },
   "dependencies": {
@@ -48,6 +49,7 @@
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.6.2",
     "tailwindcss": "^4",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   },
   "engines": {
