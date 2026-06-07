@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-import { BRAND } from "@/lib/constants";
+import { BRAND, getSiteUrl } from "@/lib/constants";
 import type { HomePageData, DevlogCard, DevlogDetail, EngineeringLogCard, EngineeringLogDetail, Experience, PersonProfile, ProjectCard, ProjectDetail, SiteSettings } from "@/sanity/schemas";
 
 function resolveOgImageUrl(
@@ -42,7 +42,7 @@ function buildContentMetadata({
     },
     openGraph: {
       type: openGraphType,
-      url: `${BRAND.siteUrl}${canonicalPath}`,
+      url: `${getSiteUrl()}${canonicalPath}`,
       title,
       description,
       siteName: BRAND.name,
@@ -145,7 +145,7 @@ export function buildCreativeWorkJsonLd(
   project: ProjectDetail,
   siteSettings: SiteSettings | null,
 ) {
-  const url = `${BRAND.siteUrl}/projects/${project.slug}`;
+  const url = `${getSiteUrl()}/projects/${project.slug}`;
   const image =
     project.seo?.ogImage?.url ??
     project.featuredImage?.url ??
@@ -163,7 +163,7 @@ export function buildCreativeWorkJsonLd(
     author: {
       "@type": "Person",
       name: BRAND.name,
-      url: BRAND.siteUrl,
+      url: getSiteUrl(),
     },
     keywords: project.technologies?.join(", "),
     genre: project.category?.title,
@@ -282,13 +282,13 @@ export function buildResumePageJsonLd(
     "@context": "https://schema.org",
     "@type": "ProfilePage",
     name: `${name} — Resume`,
-    url: `${BRAND.siteUrl}/resume`,
+    url: `${getSiteUrl()}/resume`,
     mainEntity: {
       "@type": "Person",
       name,
       jobTitle: profile?.title ?? BRAND.title,
       description: profile?.professionalSummary ?? profile?.tagline ?? BRAND.tagline,
-      url: `${BRAND.siteUrl}/resume`,
+      url: `${getSiteUrl()}/resume`,
       email: siteSettings?.contactEmail,
       image: profile?.profileImage?.url ?? undefined,
       knowsAbout: profile?.expertiseAreas,
@@ -381,7 +381,7 @@ export function buildDevlogArticleJsonLd(
   devlog: DevlogDetail,
   siteSettings: SiteSettings | null,
 ) {
-  const url = `${BRAND.siteUrl}/devlogs/${devlog.slug}`;
+  const url = `${getSiteUrl()}/devlogs/${devlog.slug}`;
   const image = devlog.seo?.ogImage?.url ?? siteSettings?.defaultOgImage?.url;
 
   return {
@@ -396,12 +396,12 @@ export function buildDevlogArticleJsonLd(
     author: {
       "@type": "Person",
       name: BRAND.name,
-      url: BRAND.siteUrl,
+      url: getSiteUrl(),
     },
     publisher: {
       "@type": "Person",
       name: BRAND.name,
-      url: BRAND.siteUrl,
+      url: getSiteUrl(),
     },
     keywords: devlog.tags?.join(", "),
     articleSection: "Devlog",
@@ -414,11 +414,11 @@ export function buildDevlogFeedJsonLd(devlogs: DevlogCard[]) {
     "@type": "Blog",
     name: `${BRAND.name} — Devlogs`,
     description: "Growth journal for game development progress and learning.",
-    url: `${BRAND.siteUrl}/devlogs`,
+    url: `${getSiteUrl()}/devlogs`,
     blogPost: devlogs.slice(0, 10).map((entry) => ({
       "@type": "BlogPosting",
       headline: entry.title,
-      url: `${BRAND.siteUrl}/devlogs/${entry.slug}`,
+      url: `${getSiteUrl()}/devlogs/${entry.slug}`,
       ...(entry.publishedAt ? { datePublished: entry.publishedAt } : {}),
     })),
   };
@@ -428,7 +428,7 @@ export function buildArticleJsonLd(
   log: EngineeringLogDetail,
   siteSettings: SiteSettings | null,
 ) {
-  const url = `${BRAND.siteUrl}/engineering/${log.slug}`;
+  const url = `${getSiteUrl()}/engineering/${log.slug}`;
   const image = log.seo?.ogImage?.url ?? siteSettings?.defaultOgImage?.url;
 
   return {
@@ -443,12 +443,12 @@ export function buildArticleJsonLd(
     author: {
       "@type": "Person",
       name: BRAND.name,
-      url: BRAND.siteUrl,
+      url: getSiteUrl(),
     },
     publisher: {
       "@type": "Person",
       name: BRAND.name,
-      url: BRAND.siteUrl,
+      url: getSiteUrl(),
     },
     keywords: log.technologies?.join(", "),
     articleSection: log.category?.title,
@@ -467,7 +467,7 @@ export function buildPersonJsonLd(
     name: profile?.name ?? BRAND.name,
     jobTitle: profile?.title ?? BRAND.title,
     description: profile?.tagline ?? BRAND.tagline,
-    url: BRAND.siteUrl,
+    url: getSiteUrl(),
     email: siteSettings?.contactEmail,
     sameAs: [siteSettings?.linkedinUrl, siteSettings?.githubUrl].filter(Boolean),
   };
@@ -478,7 +478,7 @@ export function buildWebSiteJsonLd(siteSettings: SiteSettings | null) {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: siteSettings?.siteName ?? `${BRAND.name} OS`,
-    url: BRAND.siteUrl,
+    url: getSiteUrl(),
     description: BRAND.tagline,
   };
 }
@@ -493,7 +493,7 @@ export function buildContactPageJsonLd(
     "@context": "https://schema.org",
     "@type": "ContactPage",
     name: `Contact ${name}`,
-    url: `${BRAND.siteUrl}/contact`,
+    url: `${getSiteUrl()}/contact`,
     description:
       profile?.tagline ??
       `Contact ${name} about game development roles and collaborations.`,
@@ -501,7 +501,7 @@ export function buildContactPageJsonLd(
       "@type": "Person",
       name,
       jobTitle: profile?.title ?? BRAND.title,
-      url: BRAND.siteUrl,
+      url: getSiteUrl(),
       sameAs: [siteSettings?.linkedinUrl, siteSettings?.githubUrl].filter(Boolean),
     },
   };
@@ -512,13 +512,13 @@ export function buildProjectsCollectionJsonLd(projects: ProjectCard[]) {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: `${BRAND.name} — Projects`,
-    url: `${BRAND.siteUrl}/projects`,
+    url: `${getSiteUrl()}/projects`,
     mainEntity: {
       "@type": "ItemList",
       itemListElement: projects.slice(0, 20).map((project, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${BRAND.siteUrl}/projects/${project.slug}`,
+        url: `${getSiteUrl()}/projects/${project.slug}`,
         name: project.title,
       })),
     },
@@ -530,13 +530,13 @@ export function buildEngineeringCollectionJsonLd(logs: EngineeringLogCard[]) {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: `${BRAND.name} — Engineering`,
-    url: `${BRAND.siteUrl}/engineering`,
+    url: `${getSiteUrl()}/engineering`,
     mainEntity: {
       "@type": "ItemList",
       itemListElement: logs.slice(0, 20).map((log, index) => ({
         "@type": "ListItem",
         position: index + 1,
-        url: `${BRAND.siteUrl}/engineering/${log.slug}`,
+        url: `${getSiteUrl()}/engineering/${log.slug}`,
         name: log.title,
       })),
     },
@@ -545,7 +545,7 @@ export function buildEngineeringCollectionJsonLd(logs: EngineeringLogCard[]) {
 
 export function buildRootMetadata(): Metadata {
   return {
-    metadataBase: new URL(BRAND.siteUrl),
+    metadataBase: new URL(getSiteUrl()),
     title: {
       default: `${BRAND.name} — ${BRAND.title}`,
       template: `%s | ${BRAND.name}`,
@@ -566,7 +566,7 @@ export function buildRootMetadata(): Metadata {
     openGraph: {
       type: "website",
       locale: "en_US",
-      url: BRAND.siteUrl,
+      url: getSiteUrl(),
       siteName: BRAND.name,
       title: `${BRAND.name} — ${BRAND.title}`,
       description: BRAND.tagline,

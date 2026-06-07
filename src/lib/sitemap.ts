@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { BRAND } from "@/lib/constants";
+import { getSiteUrl } from "@/lib/constants";
 import type { SitemapData, SitemapEntry } from "@/sanity/schemas/sitemap";
 
 export const STATIC_SITEMAP_ROUTES = [
@@ -29,7 +29,7 @@ function buildContentEntries(
   priority: number,
 ): MetadataRoute.Sitemap {
   return entries.map((entry) => ({
-    url: `${BRAND.siteUrl}${pathPrefix}/${entry.slug}`,
+    url: `${getSiteUrl()}${pathPrefix}/${entry.slug}`,
     lastModified: parseLastModified(entry.lastModified),
     changeFrequency,
     priority,
@@ -39,7 +39,7 @@ function buildContentEntries(
 export function buildSitemap(data: SitemapData | null): MetadataRoute.Sitemap {
   const staticEntries: MetadataRoute.Sitemap = STATIC_SITEMAP_ROUTES.map(
     (route) => ({
-      url: `${BRAND.siteUrl}${route.path}`,
+      url: `${getSiteUrl()}${route.path}`,
       changeFrequency: route.changeFrequency,
       priority: route.priority,
     }),

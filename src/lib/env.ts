@@ -11,10 +11,11 @@ const serverSchema = z.object({
 });
 
 const clientSchema = z.object({
-  NEXT_PUBLIC_SITE_URL: z
-    .string()
-    .url()
-    .default("https://mohammedhasanraza.com"),
+  NEXT_PUBLIC_SITE_URL: z.preprocess(
+    (value) =>
+      typeof value === "string" && value.trim() === "" ? undefined : value,
+    z.string().url().default("https://mohammedhasanraza.com"),
+  ),
   NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().optional(),
   NEXT_PUBLIC_SANITY_DATASET: z.string().default("production"),
   NEXT_PUBLIC_SANITY_API_VERSION: z.string().default("2024-01-01"),

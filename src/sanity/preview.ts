@@ -1,6 +1,6 @@
 import { draftMode } from "next/headers";
 
-import { getClientEnv } from "@/lib/env";
+import { getSiteUrl as getPublicSiteUrl } from "@/lib/constants";
 import { documentTypes, sanityTags, singletonIds } from "@/sanity/env";
 
 export async function isPreviewMode(): Promise<boolean> {
@@ -92,5 +92,5 @@ export function getRevalidationTags(payload: {
 }
 
 export function getSiteUrl(): string {
-  return getClientEnv().NEXT_PUBLIC_SITE_URL;
+  return getPublicSiteUrl();
 }
