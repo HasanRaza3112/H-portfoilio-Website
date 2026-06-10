@@ -73,8 +73,8 @@ export function ProjectFiltersBar({
       )}
       aria-label="Project filters"
     >
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
-        <div className="relative w-full lg:max-w-md">
+      <div className="flex w-full flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <div className="relative w-full md:max-w-md">
           <label htmlFor="project-search" className="sr-only">
             Search projects
           </label>
@@ -106,12 +106,12 @@ export function ProjectFiltersBar({
         </p>
       </div>
 
-      <div className="space-y-4">
-        <div>
+      <div className="flex w-full flex-col gap-4 md:gap-6">
+        <div className="w-full min-w-0">
           <p className="mb-2 text-caption font-medium uppercase tracking-wider text-muted">
             Category
           </p>
-          <div className="flex flex-wrap gap-2">
+          <div className="-mx-1 flex flex-nowrap gap-2 overflow-x-auto px-1 pb-2 scrollbar-none md:flex-wrap md:overflow-visible md:pb-0">
             <FilterChip
               active={!filters.category}
               onClick={() => updateFilters({ category: undefined })}
@@ -138,11 +138,11 @@ export function ProjectFiltersBar({
           </div>
         </div>
 
-        <div>
+        <div className="w-full min-w-0">
           <p className="mb-2 text-caption font-medium uppercase tracking-wider text-muted">
             Status
           </p>
-          <div className="flex flex-wrap gap-2">
+          <div className="-mx-1 flex flex-nowrap gap-2 overflow-x-auto px-1 pb-2 scrollbar-none md:flex-wrap md:overflow-visible md:pb-0">
             <FilterChip
               active={!filters.status}
               onClick={() => updateFilters({ status: undefined })}
@@ -206,7 +206,7 @@ function FilterChip({
       onClick={onClick}
       aria-pressed={active}
       className={cn(
-        "rounded-full border px-3 py-1.5 text-caption font-medium transition-colors-token",
+        "shrink-0 rounded-full border px-3 py-1.5 text-caption font-medium transition-colors-token",
         active
           ? "border-border-accent bg-accent-subtle text-accent"
           : "border-border-subtle bg-surface-secondary text-muted hover:border-border hover:text-foreground",

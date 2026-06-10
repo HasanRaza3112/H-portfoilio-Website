@@ -18,7 +18,7 @@ export function HeroSection({ data }: HeroSectionProps) {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="border-b border-border-subtle py-section-md md:py-section-lg"
+      className="border-b border-border-subtle py-12 md:py-24"
     >
       <div className="mx-auto w-full max-w-container-content px-[var(--container-padding)]">
         <MotionHero className="flex max-w-4xl flex-col gap-6 md:gap-8">
@@ -43,12 +43,14 @@ export function HeroSection({ data }: HeroSectionProps) {
           {profile.expertiseAreas.length > 0 ? (
             <MotionHeroItem>
               <ul
-                className="flex flex-wrap gap-2"
+                className="flex max-w-full flex-wrap gap-2"
                 aria-label="Areas of expertise"
               >
                 {profile.expertiseAreas.map((area) => (
-                  <li key={area}>
-                    <Tag variant="accent">{area}</Tag>
+                  <li key={area} className="max-w-full min-w-0">
+                    <Tag variant="accent" className="max-w-full whitespace-normal break-words">
+                      {area}
+                    </Tag>
                   </li>
                 ))}
               </ul>

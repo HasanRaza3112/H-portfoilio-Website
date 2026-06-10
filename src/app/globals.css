@@ -80,4 +80,13 @@
   .max-w-container-wide {
     max-width: var(--container-wide);
   }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
 }
