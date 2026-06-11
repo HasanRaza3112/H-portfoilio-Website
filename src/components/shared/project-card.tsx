@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
+import { Badge } from "@/components/ui/8bit-badge";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+} from "@/components/ui/8bit-card";
 import { Tag } from "@/components/ui/tag";
 import { SanityImage } from "@/components/shared/sanity-image";
 import {
@@ -40,11 +40,7 @@ export function ProjectCardLink({
       href={`/projects/${project.slug}`}
       className={cn("group block h-full focus-visible:outline-none", className)}
     >
-      <Card
-        variant="interactive"
-        padding="none"
-        className="flex h-full flex-col overflow-hidden"
-      >
+      <Card className="flex h-full flex-col overflow-hidden">
         <SanityImage
           image={project.featuredImage}
           alt={project.featuredImage?.alt ?? project.title}

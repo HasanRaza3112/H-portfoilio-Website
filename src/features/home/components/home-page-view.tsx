@@ -9,6 +9,7 @@ import {
 import { ExperienceSnapshotSection } from "@/features/home/components/experience-snapshot-section";
 import { HeroSection } from "@/features/home/components/hero-section";
 import { LatestDevlogsSection } from "@/features/home/components/latest-devlogs-section";
+import { OsChangelogSection } from "@/features/home/components/os-changelog-section";
 import { compactArray } from "@/features/home/lib/home-data";
 import type { HomePageData } from "@/types";
 
@@ -38,6 +39,7 @@ export function HomePageView({ data }: HomePageViewProps) {
         <ExperienceSnapshotSection experience={experience} />
       ) : null}
       {showDevlogs ? <LatestDevlogsSection devlogs={devlogs} /> : null}
+      <OsChangelogSection />
       <ContactCtaSection
         headline={homepage?.contactCtaHeadline ?? "Open to game industry opportunities"}
         description={homepage?.contactCtaDescription}

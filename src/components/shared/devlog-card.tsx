@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/8bit-card";
 import { Tag } from "@/components/ui/tag";
 import { cn } from "@/lib/utils";
 import type { DevlogCard } from "@/types";
@@ -31,7 +31,7 @@ export function DevlogCardLink({ devlog, className }: DevlogCardLinkProps) {
       href={`/devlogs/${devlog.slug}`}
       className={cn("group block focus-visible:outline-none", className)}
     >
-      <Card variant="interactive" className="h-full">
+      <Card className="h-full">
         <CardHeader className="gap-3">
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-2">

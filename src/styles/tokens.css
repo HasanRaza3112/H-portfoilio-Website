@@ -28,6 +28,15 @@
   --accent-foreground: #ffffff;
   --accent-subtle: rgba(255, 42, 42, 0.08);
 
+  /* ─── Color: shadcn / 8bitcn semantic ─── */
+  --primary: #ff2a2a;
+  --primary-foreground: #ffffff;
+  --secondary: #16161c;
+  --secondary-foreground: #eef0f4;
+  --card: #0f0f12;
+  --card-foreground: #eef0f4;
+  --ring: #ff2a2a;
+
   --success: #4ade80;
   --success-subtle: rgb(74 222 128 / 12%);
   --warning: #fbbf24;
@@ -188,8 +197,13 @@
   --color-surface-overlay: var(--surface-overlay);
   --color-muted: var(--text-secondary);
   --color-muted-foreground: var(--text-muted);
-  --color-primary: var(--accent);
-  --color-primary-foreground: var(--accent-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-ring: var(--ring);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent-hover: var(--accent-hover);

@@ -45,7 +45,7 @@ function GamingNavLink({
       onClick={onClick}
       aria-current={isActive ? "page" : undefined}
       className={cn(
-        "group inline-flex items-center gap-1.5 font-mono text-body-sm font-medium uppercase tracking-wider transition-colors-token",
+        "retro group inline-flex items-center gap-1.5 text-body-sm font-medium uppercase tracking-wider transition-colors-token",
         isActive ? "text-accent" : "text-muted hover:text-accent",
         className,
       )}
@@ -110,7 +110,7 @@ export function SiteHeader() {
             aria-label={`${BRAND.name} — Home`}
             onClick={closeMobileMenu}
           >
-            <span className="font-mono text-body-sm font-semibold text-foreground transition-colors-token group-hover:text-accent">
+            <span className="retro text-body-sm font-semibold text-foreground transition-colors-token group-hover:text-accent">
               {BRAND.name}
             </span>
             <span className="font-mono text-caption text-muted hidden sm:block">

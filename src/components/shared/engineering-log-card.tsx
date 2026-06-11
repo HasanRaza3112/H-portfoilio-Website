@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/8bit-badge";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/8bit-card";
 import { Tag } from "@/components/ui/tag";
 import { cn } from "@/lib/utils";
 import type { EngineeringLogCard } from "@/types";
@@ -21,7 +21,7 @@ export function EngineeringLogCardLink({
       href={`/engineering/${log.slug}`}
       className={cn("group block h-full focus-visible:outline-none", className)}
     >
-      <Card variant="interactive" className="flex h-full flex-col">
+      <Card className="flex h-full flex-col">
         <CardHeader className="gap-3">
           <div className="flex items-start justify-between gap-3">
             <CardTitle className="group-hover:text-accent transition-colors-token">

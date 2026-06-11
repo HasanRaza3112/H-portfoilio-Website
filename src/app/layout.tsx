@@ -14,7 +14,7 @@ export const metadata: Metadata = buildRootMetadata();
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#0b0d11",
+  themeColor: "#050505",
 };
 
 export default function RootLayout({
@@ -23,11 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={fontVariables}>
+    <html lang="en" className={`dark ${fontVariables}`}>
       <head>
         <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
       </head>
-      <body className="min-h-screen antialiased">
+      <body className="min-h-screen bg-background font-sans antialiased">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-accent-foreground"
