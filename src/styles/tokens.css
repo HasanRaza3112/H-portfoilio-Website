@@ -1,6 +1,6 @@
 /*
  * Mohammed Hasan Raza OS — Design Tokens
- * Red & Black Gaming HUD · Hasan Raza OS Command Center
+ * Valorant / Destiny 2 HUD · Neon Crimson · Obsidian · Tactical Amber
  * Do not hardcode values in components — reference tokens.
  */
 
@@ -8,12 +8,12 @@
   color-scheme: dark;
 
   /* ─── Color: Base ─── */
-  --background: #050505;
+  --background: #08080a;
   --foreground: #eef0f4;
-  --surface: #0f0f12;
-  --surface-secondary: #16161c;
-  --surface-elevated: #1e1e24;
-  --surface-overlay: #252530;
+  --surface: #0d0d12;
+  --surface-secondary: #14141b;
+  --surface-elevated: #1b1b24;
+  --surface-overlay: #22222c;
 
   /* ─── Color: Text ─── */
   --text-primary: #eef0f4;
@@ -22,33 +22,35 @@
   --text-muted: #b4bac6;
 
   /* ─── Color: Accent & Status ─── */
-  --accent: #ff2a2a;
-  --accent-hover: #ff5555;
-  --accent-muted: #8b0000;
+  --accent: #ff4655;
+  --accent-hover: #ff6e7a;
+  --accent-muted: #9c1c26;
   --accent-foreground: #ffffff;
-  --accent-subtle: rgba(255, 42, 42, 0.08);
+  --accent-subtle: rgba(255, 70, 85, 0.08);
 
-  /* ─── Color: shadcn / 8bitcn semantic ─── */
-  --primary: #ff2a2a;
+  /* ─── Color: shadcn / semantic ─── */
+  --primary: #ff4655;
   --primary-foreground: #ffffff;
-  --secondary: #16161c;
+  --secondary: #14141b;
   --secondary-foreground: #eef0f4;
-  --card: #0f0f12;
+  --card: #0d0d12;
   --card-foreground: #eef0f4;
-  --ring: #ff2a2a;
+  --ring: #ff4655;
 
   --success: #4ade80;
   --success-subtle: rgb(74 222 128 / 12%);
-  --warning: #fbbf24;
-  --warning-subtle: rgb(251 191 36 / 12%);
+  --amber: #ffb547;
+  --amber-subtle: rgba(255, 181, 71, 0.12);
+  --warning: #ffb547;
+  --warning-subtle: rgba(255, 181, 71, 0.12);
   --destructive: #ef4444;
   --destructive-subtle: rgb(239 68 68 / 12%);
 
   /* ─── Color: Border ─── */
-  --border: #1e1e24;
-  --border-subtle: #141418;
-  --border-strong: #2a2a32;
-  --border-accent: rgba(255, 42, 42, 0.35);
+  --border: #1a1a24;
+  --border-subtle: #13131a;
+  --border-strong: #2a2a36;
+  --border-accent: rgba(255, 70, 85, 0.3);
 
   /* ─── Typography: Families ─── */
   --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
@@ -56,7 +58,7 @@
   --font-heading: var(--font-mono);
 
   /* ─── Typography: Scale (fluid — scales down smoothly on mobile) ─── */
-  --text-display-size: clamp(2.25rem, 6vw, 3.5rem);
+  --text-display-size: clamp(2.25rem, 5vw, 3.25rem);
   --text-display-height: 1.08;
   --text-display-tracking: -0.03em;
 
@@ -135,14 +137,15 @@
   --shadow-md: 0 4px 16px rgb(0 0 0 / 55%);
   --shadow-lg: 0 8px 32px rgb(0 0 0 / 60%);
   --shadow-panel:
-    0 0 0 1px var(--border-subtle), 0 1px 0 0 rgb(255 42 42 / 4%) inset,
+    0 0 0 1px var(--border-subtle), 0 1px 0 0 rgb(255 70 85 / 4%) inset,
     var(--shadow-sm);
   --shadow-elevated:
-    0 0 0 1px var(--border), 0 1px 0 0 rgb(255 42 42 / 6%) inset,
+    0 0 0 1px var(--border), 0 1px 0 0 rgb(255 70 85 / 6%) inset,
     var(--shadow-md);
   --shadow-accent:
-    0 0 0 1px var(--border-accent), 0 0 24px rgb(255 42 42 / 15%);
-  --shadow-glow-red: 0 0 15px rgba(255, 42, 42, 0.25);
+    0 0 0 1px var(--border-accent), 0 0 24px rgb(255 70 85 / 15%);
+  --shadow-glow-red: 0 0 20px rgba(255, 70, 85, 0.15);
+  --shadow-glow-crimson: 0 0 20px rgba(255, 70, 85, 0.25);
 
   /* ─── Motion ─── */
   --duration-instant: 100ms;
@@ -169,11 +172,11 @@
   /* ─── HUD ─── */
   --hud-clip-path: polygon(
     0 0,
-    calc(100% - 10px) 0,
-    100% 10px,
+    calc(100% - 12px) 0,
+    100% 12px,
     100% 100%,
-    10px 100%,
-    0 calc(100% - 10px)
+    12px 100%,
+    0 calc(100% - 12px)
   );
 }
 
@@ -209,6 +212,8 @@
   --color-accent-hover: var(--accent-hover);
   --color-accent-muted: var(--accent-muted);
   --color-accent-subtle: var(--accent-subtle);
+  --color-amber: var(--amber);
+  --color-amber-subtle: var(--amber-subtle);
   --color-success: var(--success);
   --color-success-subtle: var(--success-subtle);
   --color-warning: var(--warning);
@@ -227,7 +232,7 @@
   --font-mono: var(--font-mono);
   --font-heading: var(--font-heading);
 
-  --text-display: clamp(2.25rem, 6vw, 3.5rem);
+  --text-display: clamp(2.25rem, 5vw, 3.25rem);
   --text-display--line-height: var(--text-display-height);
   --text-display--letter-spacing: var(--text-display-tracking);
   --text-display--font-weight: 600;

@@ -17,7 +17,7 @@ const SPLINE_EMBED_URL =
 function Hero3DLoadingState() {
   return (
     <div
-      className="flex h-full w-full flex-col items-center justify-center gap-4 border border-border-accent bg-surface-secondary/80 p-6 hud-clip"
+      className="flex h-full w-full flex-col items-center justify-center gap-4 bg-surface-secondary/80 p-6"
       aria-hidden
     >
       <div className="size-10 animate-pulse rounded-full border-2 border-accent border-t-transparent" />
@@ -25,7 +25,7 @@ function Hero3DLoadingState() {
         Loading 3D Scene…
       </p>
       <p className="text-center font-mono text-[0.625rem] text-muted">
-        HASAN_RAZA_OS // RENDER_INIT
+        {`// AVATAR.SYS · RENDER_INIT`}
       </p>
     </div>
   );
@@ -45,9 +45,9 @@ function Hero3DFallback() {
   }
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-3 border border-dashed border-border-accent bg-surface-secondary/60 p-6 text-center hud-clip">
+    <div className="flex h-full w-full flex-col items-center justify-center gap-3 border border-dashed border-border-accent bg-surface-secondary/60 p-6 text-center">
       <span className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-accent">
-        3D_SCENE_PENDING
+        {`// 3D_SCENE.PENDING`}
       </span>
       <p className="max-w-xs font-mono text-caption text-muted">
         Set <code className="text-accent">NEXT_PUBLIC_SPLINE_HERO_URL</code> or{" "}
@@ -91,32 +91,43 @@ export function Hero3DCanvas({ className }: Hero3DCanvasProps) {
 
   return (
     <div
-      className={cn(
-        "relative w-full overflow-hidden border border-border-accent bg-surface-secondary/40 shadow-accent hud-clip",
-        "aspect-square md:aspect-auto md:h-[500px]",
-        className,
-      )}
+      className={cn("hero-viewport-panel relative w-full", className)}
       aria-label="3D developer avatar"
     >
       <span
-        className="pointer-events-none absolute top-2 left-3 z-10 font-mono text-[0.625rem] uppercase tracking-widest text-accent/80"
+        className="pointer-events-none absolute top-3 left-4 z-20 font-mono text-[0.625rem] uppercase tracking-widest text-accent/80"
         aria-hidden
       >
-        AVATAR_3D
+        {`// AVATAR.3D`}
+      </span>
+      <span
+        className="pointer-events-none absolute top-3 right-4 z-20 font-mono text-[0.625rem] uppercase tracking-widest text-muted"
+        aria-hidden
+      >
+        RENDER.LIVE
       </span>
 
-      {!showSpline ? (
-        <Hero3DFallback />
-      ) : (
-        <>
-          {!isLoaded ? <Hero3DLoadingState /> : null}
-          <Spline
-            scene={SPLINE_SCENE_URL}
-            className={cn("h-full w-full", !isLoaded && "sr-only")}
-            onLoad={handleLoad}
-          />
-        </>
-      )}
+      <div className="hero-viewport-grid pointer-events-none absolute inset-0 z-10" aria-hidden />
+
+      <div
+        className={cn(
+          "relative z-0 w-full overflow-hidden bg-surface-secondary/40",
+          "aspect-square md:aspect-auto md:h-[500px]",
+        )}
+      >
+        {!showSpline ? (
+          <Hero3DFallback />
+        ) : (
+          <>
+            {!isLoaded ? <Hero3DLoadingState /> : null}
+            <Spline
+              scene={SPLINE_SCENE_URL}
+              className={cn("h-full w-full", !isLoaded && "sr-only")}
+              onLoad={handleLoad}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 }

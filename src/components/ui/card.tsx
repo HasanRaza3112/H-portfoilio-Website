@@ -4,16 +4,16 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
-  "relative border bg-surface text-foreground transition-all duration-300 hud-clip",
+  "card-hud relative border bg-surface text-foreground transition-all duration-300 hud-clip",
   {
     variants: {
       variant: {
         default:
-          "border-border-subtle shadow-panel hover:border-border-accent hover:shadow-[0_0_15px_rgba(255,42,42,0.25)]",
+          "border-border-subtle shadow-panel hover:border-border-accent hover:shadow-[0_0_20px_rgba(255,70,85,0.15)]",
         elevated:
-          "border-border shadow-elevated bg-surface-secondary hover:border-border-accent hover:shadow-[0_0_15px_rgba(255,42,42,0.25)]",
+          "border-border shadow-elevated bg-surface-secondary hover:border-border-accent hover:shadow-[0_0_20px_rgba(255,70,85,0.15)]",
         interactive:
-          "border-border-subtle shadow-panel hover:border-border-accent hover:shadow-[0_0_15px_rgba(255,42,42,0.25)] cursor-pointer",
+          "border-border-subtle shadow-panel hover:border-border-accent hover:shadow-[0_0_20px_rgba(255,70,85,0.15)] cursor-pointer",
         ghost: "border-transparent bg-transparent shadow-none [clip-path:none]",
       },
       padding: {
@@ -41,7 +41,7 @@ function Card({
   className,
   variant,
   padding,
-  hudLabel = "SYS_ACTIVE",
+  hudLabel = "// PRJ.DAT",
   children,
   ...props
 }: CardProps) {
@@ -57,7 +57,7 @@ function Card({
           className="pointer-events-none absolute top-2 right-3 z-10 font-mono text-[0.625rem] font-medium uppercase tracking-widest text-accent/70"
           aria-hidden
         >
-          {hudLabel}
+          {hudLabel.startsWith("//") ? hudLabel : `// ${hudLabel}`}
         </span>
       ) : null}
       {children}

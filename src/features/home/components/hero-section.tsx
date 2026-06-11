@@ -21,14 +21,20 @@ interface HeroSectionProps {
 
 function OpenToWorkIndicator() {
   return (
-    <div className="inline-flex items-center gap-2.5 rounded-none border border-border-accent bg-accent-subtle px-3 py-1.5">
-      <span className="relative flex size-2.5" aria-hidden>
-        <span className="status-pulse absolute inline-flex size-full rounded-full bg-success" />
-        <span className="relative inline-flex size-2.5 rounded-full bg-success ring-2 ring-accent/40" />
-      </span>
-      <span className="font-mono text-caption font-medium uppercase tracking-widest text-accent">
-        Open to Work
-      </span>
+    <div className="relative inline-flex items-center gap-3">
+      <span
+        className="status-breathe pointer-events-none absolute -left-3 top-1/2 size-8 -translate-y-1/2 rounded-full bg-amber/30 blur-md"
+        aria-hidden
+      />
+      <div className="relative inline-flex items-center gap-2.5 rounded-none border border-border-accent bg-accent-subtle px-3 py-1.5">
+        <span className="relative flex size-2.5" aria-hidden>
+          <span className="status-pulse absolute inline-flex size-full rounded-full bg-success" />
+          <span className="relative inline-flex size-2.5 rounded-full bg-success ring-2 ring-amber/50" />
+        </span>
+        <span className="font-mono text-caption font-medium uppercase tracking-widest text-accent">
+          Open to Work
+        </span>
+      </div>
     </div>
   );
 }
@@ -43,7 +49,7 @@ export function HeroSection({ data }: HeroSectionProps) {
   return (
     <section
       aria-labelledby="hero-heading"
-      className="border-b border-border-subtle py-12 md:py-24"
+      className="relative border-b border-border-subtle py-12 md:py-24 glow-mesh"
     >
       <div className="mx-auto w-full max-w-container-content px-[var(--container-padding)]">
         <div className="grid items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">

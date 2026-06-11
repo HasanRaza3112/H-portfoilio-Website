@@ -45,27 +45,21 @@ function GamingNavLink({
       onClick={onClick}
       aria-current={isActive ? "page" : undefined}
       className={cn(
-        "retro group inline-flex items-center gap-1.5 text-body-sm font-medium uppercase tracking-wider transition-colors-token",
-        isActive ? "text-accent" : "text-muted hover:text-accent",
+        "nav-console-link group inline-flex items-center gap-1.5 font-mono text-body-sm font-medium uppercase tracking-widest transition-colors-token",
+        isActive ? "text-accent nav-console-link--active" : "text-muted hover:text-accent",
         className,
       )}
     >
       <span
         className={cn(
-          "text-accent transition-opacity",
-          isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+          "size-1 rounded-full bg-accent transition-all duration-300",
+          isActive
+            ? "opacity-100 shadow-[0_0_6px_rgba(255,70,85,0.8)]"
+            : "opacity-0 group-hover:opacity-100",
         )}
         aria-hidden
-      >
-        ›
-      </span>
-      <span
-        className={cn(
-          isActive && "underline decoration-accent underline-offset-4",
-        )}
-      >
-        {isActive ? `[ ${label} ]` : label}
-      </span>
+      />
+      <span>{`// ${label.toUpperCase()}`}</span>
     </Link>
   );
 }
@@ -110,7 +104,7 @@ export function SiteHeader() {
             aria-label={`${BRAND.name} — Home`}
             onClick={closeMobileMenu}
           >
-            <span className="retro text-body-sm font-semibold text-foreground transition-colors-token group-hover:text-accent">
+            <span className="font-mono text-body-sm font-semibold uppercase tracking-widest text-foreground transition-colors-token group-hover:text-accent">
               {BRAND.name}
             </span>
             <span className="font-mono text-caption text-muted hidden sm:block">
@@ -119,7 +113,7 @@ export function SiteHeader() {
           </Link>
 
           <nav aria-label="Primary" className="hidden md:block">
-            <ul className="flex items-center justify-end gap-3 lg:gap-4">
+            <ul className="flex items-center justify-end gap-3 lg:gap-5">
               {navItems.map((item) => (
                 <li key={item.href}>
                   <GamingNavLink
@@ -186,12 +180,12 @@ export function SiteHeader() {
           )}
         >
           <div className="relative flex h-16 items-center justify-between border-b border-border-accent/40 px-6">
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-0.5">
               <span className="font-mono text-caption uppercase tracking-[0.2em] text-accent">
-                NAV_PANEL
+                {`// NAV.TERM`}
               </span>
               <span className="font-mono text-[0.625rem] text-muted">
-                HASAN_RAZA_OS v1.0
+                HASAN_RAZA_OS v1.0 · TACTICAL HUD
               </span>
             </div>
             <button
@@ -215,9 +209,9 @@ export function SiteHeader() {
                     onClick={closeMobileMenu}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "group flex items-center gap-3 rounded-none border border-transparent px-4 py-3 font-mono text-body-lg font-medium uppercase tracking-wider transition-colors-token",
+                      "nav-console-link group flex items-center gap-3 rounded-none border border-transparent px-4 py-3 font-mono text-body-lg font-medium uppercase tracking-widest transition-colors-token",
                       active
-                        ? "border-border-accent bg-accent-subtle text-accent shadow-glow-red"
+                        ? "nav-console-link--active border-border-accent bg-accent-subtle text-accent shadow-glow-red"
                         : "text-foreground hover:border-border-accent hover:bg-surface-secondary hover:text-accent",
                     )}
                   >
@@ -225,12 +219,13 @@ export function SiteHeader() {
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <span
-                      className="text-accent opacity-0 transition-opacity group-hover:opacity-100"
+                      className={cn(
+                        "size-1.5 rounded-full bg-accent transition-opacity",
+                        active ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+                      )}
                       aria-hidden
-                    >
-                      ›
-                    </span>
-                    <span>{active ? `[ ${item.label} ]` : item.label}</span>
+                    />
+                    <span>{`// ${item.label.toUpperCase()}`}</span>
                   </Link>
                 </li>
               );
@@ -240,6 +235,8 @@ export function SiteHeader() {
           <div className="relative border-t border-border-accent/40 px-6 py-4">
             <p className="font-mono text-[0.625rem] uppercase tracking-widest text-muted">
               SYS_STATUS: <span className="text-success">ONLINE</span>
+              <span className="mx-2 text-border-strong">|</span>
+              <span className="text-amber">LINK: SECURE</span>
             </p>
           </div>
         </nav>

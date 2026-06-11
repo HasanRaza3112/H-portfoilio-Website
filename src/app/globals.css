@@ -31,6 +31,19 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -9;
+    pointer-events: none;
+    background-image: radial-gradient(
+      rgba(255, 70, 85, 0.03) 1px,
+      transparent 0
+    );
+    background-size: 24px 24px;
+  }
+
   ::selection {
     background-color: var(--accent-subtle);
     color: var(--text-primary);
@@ -76,6 +89,10 @@
     box-shadow: var(--shadow-glow-red);
   }
 
+  .shadow-glow-crimson {
+    box-shadow: var(--shadow-glow-crimson);
+  }
+
   .transition-colors-token {
     transition: var(--transition-colors);
   }
@@ -105,46 +122,185 @@
     clip-path: var(--hud-clip-path);
   }
 
-  .btn-scanline {
+  .glow-mesh {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .glow-mesh::before {
+    content: "";
+    position: absolute;
+    inset: -20% -10%;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse 55% 45% at 15% 35%,
+        rgba(255, 70, 85, 0.12),
+        transparent 65%
+      ),
+      radial-gradient(
+        ellipse 40% 35% at 85% 70%,
+        rgba(255, 181, 71, 0.06),
+        transparent 60%
+      );
+  }
+
+  /* ─── HUD Buttons ─── */
+  .btn-hud {
     position: relative;
     overflow: hidden;
     isolation: isolate;
   }
 
-  .btn-scanline::before {
+  .btn-hud > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-hud-primary::before,
+  .btn-hud-primary::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border: 1px solid transparent;
+    opacity: 0;
+    transition:
+      opacity var(--duration-fast) var(--ease-standard),
+      border-color var(--duration-fast) var(--ease-standard);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .btn-hud-primary::before {
+    top: 2px;
+    left: 2px;
+    border-top-color: var(--accent-foreground);
+    border-left-color: var(--accent-foreground);
+  }
+
+  .btn-hud-primary::after {
+    bottom: 2px;
+    right: 2px;
+    border-bottom-color: var(--accent-foreground);
+    border-right-color: var(--accent-foreground);
+  }
+
+  .btn-hud-primary:hover::before,
+  .btn-hud-primary:hover::after,
+  .btn-hud-primary:focus-visible::before,
+  .btn-hud-primary:focus-visible::after {
+    opacity: 1;
+  }
+
+  .btn-hud-secondary::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: var(--accent);
+    transform: translateX(-101%);
+    transition: transform var(--duration-normal) var(--ease-out);
+  }
+
+  .btn-hud-secondary:hover::before,
+  .btn-hud-secondary:focus-visible::before {
+    transform: translateX(0);
+  }
+
+  /* ─── HUD Cards ─── */
+  .card-hud::after {
     content: "";
     position: absolute;
     inset: 0;
     z-index: 0;
     opacity: 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(255, 42, 42, 0.06) 2px,
-      rgba(255, 42, 42, 0.06) 4px
-    );
-    transition: opacity var(--duration-fast) var(--ease-standard);
     pointer-events: none;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 4px,
+      rgba(255, 70, 85, 0.04) 4px,
+      rgba(255, 70, 85, 0.04) 8px
+    );
+    transition: opacity var(--duration-normal) var(--ease-standard);
   }
 
-  .btn-scanline:hover::before,
-  .btn-scanline:focus-visible::before {
+  .card-hud:hover::after,
+  .card-hud:focus-within::after {
     opacity: 1;
   }
 
-  .btn-scanline > * {
+  .card-hud > * {
     position: relative;
     z-index: 1;
   }
 
+  /* ─── Console Navigation ─── */
+  .nav-console-link {
+    position: relative;
+  }
+
+  .nav-console-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      var(--accent) 50%,
+      transparent
+    );
+    opacity: 0;
+    transform: scaleX(0.6);
+    transition:
+      opacity var(--duration-fast) var(--ease-standard),
+      transform var(--duration-normal) var(--ease-out);
+    box-shadow: 0 0 8px rgba(255, 70, 85, 0.5);
+  }
+
+  .nav-console-link:hover::after,
+  .nav-console-link--active::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  /* ─── Hero 3D Viewport Panel ─── */
+  .hero-viewport-panel {
+    clip-path: var(--hud-clip-path);
+    border: 1px solid var(--border-accent);
+    background: var(--surface-secondary);
+    box-shadow:
+      var(--shadow-accent),
+      inset 0 0 0 1px rgba(255, 70, 85, 0.08);
+  }
+
+  .hero-viewport-grid {
+    background-image:
+      linear-gradient(rgba(255, 70, 85, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 70, 85, 0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 20%, transparent 85%);
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 80% at 50% 50%,
+      black 20%,
+      transparent 85%
+    );
+    opacity: 0.5;
+  }
+
+  /* ─── Mobile HUD Terminal ─── */
   .gaming-menu-panel {
     background:
-      linear-gradient(180deg, rgba(255, 42, 42, 0.04) 0%, transparent 40%),
+      linear-gradient(180deg, rgba(255, 70, 85, 0.05) 0%, transparent 40%),
       var(--surface);
     box-shadow:
-      inset 0 0 0 1px rgba(255, 42, 42, 0.2),
-      0 0 40px rgba(255, 42, 42, 0.08);
+      inset 0 0 0 1px rgba(255, 70, 85, 0.2),
+      0 0 40px rgba(255, 70, 85, 0.1);
   }
 
   .gaming-menu-panel::before {
@@ -156,8 +312,8 @@
       0deg,
       transparent,
       transparent 3px,
-      rgba(255, 42, 42, 0.02) 3px,
-      rgba(255, 42, 42, 0.02) 6px
+      rgba(255, 70, 85, 0.02) 3px,
+      rgba(255, 70, 85, 0.02) 6px
     );
   }
 
@@ -167,12 +323,16 @@
     background: radial-gradient(
       ellipse 80% 65% at 50% 45%,
       transparent 35%,
-      rgba(5, 5, 5, 0.75) 100%
+      rgba(8, 8, 10, 0.8) 100%
     );
   }
 
   .status-pulse {
     animation: status-pulse 2s ease-in-out infinite;
+  }
+
+  .status-breathe {
+    animation: status-breathe 3s ease-in-out infinite;
   }
 
   @keyframes status-pulse {
@@ -182,16 +342,39 @@
     }
 
     50% {
-      box-shadow: 0 0 0 6px rgba(255, 42, 42, 0);
+      box-shadow: 0 0 0 6px rgba(255, 181, 71, 0);
+    }
+  }
+
+  @keyframes status-breathe {
+    0%,
+    100% {
+      opacity: 0.35;
+      transform: translateY(-50%) scale(1);
+    }
+
+    50% {
+      opacity: 0.75;
+      transform: translateY(-50%) scale(1.35);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .status-pulse {
+    .status-pulse,
+    .status-breathe {
       animation: none;
     }
 
-    .btn-scanline::before {
+    .btn-hud-secondary::before {
+      transition: none;
+    }
+
+    .btn-hud-primary::before,
+    .btn-hud-primary::after {
+      transition: none;
+    }
+
+    .card-hud::after {
       transition: none;
     }
   }

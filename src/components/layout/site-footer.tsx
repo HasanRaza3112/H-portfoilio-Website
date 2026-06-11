@@ -7,7 +7,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-border-subtle py-section-sm">
+    <footer className="relative border-t border-border-subtle py-section-sm glow-mesh">
       <Container className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-body-sm text-muted">
           © {year} {BRAND.name}. Technical Game Engineer.

@@ -4,7 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const headingVariants = cva(
-  "retro font-semibold tracking-tight text-foreground text-balance",
+  "font-heading font-semibold tracking-tight text-foreground text-balance",
   {
     variants: {
       variant: {
