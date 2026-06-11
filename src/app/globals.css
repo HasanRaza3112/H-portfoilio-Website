@@ -161,53 +161,6 @@
     );
   }
 
-  .site-bg__grid {
-    position: absolute;
-    inset: -16px;
-    background-image:
-      linear-gradient(rgba(255, 42, 42, 0.08) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 42, 42, 0.08) 1px, transparent 1px);
-    background-size: 16px 16px;
-    animation: hud-grid-drift 8s linear infinite;
-    mask-image: radial-gradient(
-      ellipse 90% 70% at 50% 20%,
-      black 15%,
-      transparent 72%
-    );
-  }
-
-  .site-bg__glow {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(
-        ellipse 55% 35% at 50% -5%,
-        rgba(255, 42, 42, 0.18),
-        transparent 62%
-      ),
-      radial-gradient(
-        ellipse 40% 25% at 80% 90%,
-        rgba(255, 42, 42, 0.06),
-        transparent 55%
-      );
-    animation: hud-glow-pulse 4s ease-in-out infinite;
-  }
-
-  .site-bg__scanlines {
-    position: absolute;
-    inset: -8px 0;
-    background: repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 2px,
-      rgba(255, 42, 42, 0.03) 2px,
-      rgba(255, 42, 42, 0.03) 4px
-    );
-    animation: hud-scanlines 1.2s linear infinite;
-    mix-blend-mode: screen;
-    opacity: 0.55;
-  }
-
   .site-bg__vignette {
     position: absolute;
     inset: 0;
@@ -216,37 +169,6 @@
       transparent 35%,
       rgba(5, 5, 5, 0.75) 100%
     );
-  }
-
-  @keyframes hud-grid-drift {
-    from {
-      transform: translate3d(0, 0, 0);
-    }
-
-    to {
-      transform: translate3d(16px, 16px, 0);
-    }
-  }
-
-  @keyframes hud-scanlines {
-    from {
-      transform: translate3d(0, 0, 0);
-    }
-
-    to {
-      transform: translate3d(0, 8px, 0);
-    }
-  }
-
-  @keyframes hud-glow-pulse {
-    0%,
-    100% {
-      opacity: 0.65;
-    }
-
-    50% {
-      opacity: 1;
-    }
   }
 
   .status-pulse {
@@ -265,12 +187,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .site-bg__grid,
-    .site-bg__scanlines,
-    .site-bg__glow {
-      animation: none;
-    }
-
     .status-pulse {
       animation: none;
     }
