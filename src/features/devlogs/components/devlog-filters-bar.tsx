@@ -48,7 +48,9 @@ export function DevlogFiltersBar({
 
       startTransition(() => {
         const query = next.toString();
-        router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+        router.replace(query ? `${pathname}?${query}` : pathname, {
+          scroll: false,
+        });
       });
     },
     [pathname, router, searchParams],
@@ -86,7 +88,9 @@ export function DevlogFiltersBar({
             placeholder="Search journal entries…"
             value={filters.q ?? ""}
             className="h-10 w-full rounded-md border border-border-subtle bg-surface-secondary pl-10 pr-10 text-body-sm text-foreground placeholder:text-muted focus-visible:outline-none"
-            onChange={(event) => updateFilters({ q: event.target.value || undefined })}
+            onChange={(event) =>
+              updateFilters({ q: event.target.value || undefined })
+            }
           />
           {filters.q ? (
             <button
@@ -137,8 +141,12 @@ export function DevlogFiltersBar({
       {active ? (
         <div className="flex flex-wrap items-center gap-3 border-t border-border-subtle pt-4">
           <span className="text-caption text-muted">Active filters</span>
-          {filters.q ? <Badge variant="secondary">Search: {filters.q}</Badge> : null}
-          {filters.tag ? <Badge variant="secondary">Tag: {filters.tag}</Badge> : null}
+          {filters.q ? (
+            <Badge variant="secondary">Search: {filters.q}</Badge>
+          ) : null}
+          {filters.tag ? (
+            <Badge variant="secondary">Tag: {filters.tag}</Badge>
+          ) : null}
           <Button variant="ghost" size="sm" onClick={clearFilters}>
             Clear all
           </Button>
@@ -157,18 +165,23 @@ function FilterChip({
   onClick: () => void;
   children: ReactNode;
 }) {
+  const chipClassName = cn(
+    "rounded-full border px-3 py-1.5 text-caption font-medium transition-colors-token",
+    active
+      ? "border-border-accent bg-accent-subtle text-accent"
+      : "border-border-subtle bg-surface-secondary text-muted hover:border-border hover:text-foreground",
+  );
+
+  if (active) {
+    return (
+      <button type="button" onClick={onClick} aria-pressed="true" className={chipClassName}>
+        {children}
+      </button>
+    );
+  }
+
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      aria-pressed={active}
-      className={cn(
-        "rounded-full border px-3 py-1.5 text-caption font-medium transition-colors-token",
-        active
-          ? "border-border-accent bg-accent-subtle text-accent"
-          : "border-border-subtle bg-surface-secondary text-muted hover:border-border hover:text-foreground",
-      )}
-    >
+    <button type="button" onClick={onClick} aria-pressed="false" className={chipClassName}>
       {children}
     </button>
   );

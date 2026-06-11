@@ -19,6 +19,7 @@
   }
 
   body {
+    position: relative;
     background-color: var(--background);
     color: var(--text-primary);
     font-family: var(--font-sans);
@@ -26,6 +27,36 @@
     line-height: var(--text-body-height);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 42, 42, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 42, 42, 0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      black 20%,
+      transparent 70%
+    );
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 60% 40% at 50% -10%,
+      rgba(255, 42, 42, 0.06),
+      transparent 60%
+    );
   }
 
   ::selection {
@@ -53,6 +84,10 @@
     text-wrap: pretty;
   }
 
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+
   .shadow-panel {
     box-shadow: var(--shadow-panel);
   }
@@ -63,6 +98,10 @@
 
   .shadow-accent {
     box-shadow: var(--shadow-accent);
+  }
+
+  .shadow-glow-red {
+    box-shadow: var(--shadow-glow-red);
   }
 
   .transition-colors-token {
@@ -88,5 +127,90 @@
 
   .scrollbar-none::-webkit-scrollbar {
     display: none;
+  }
+
+  .hud-clip {
+    clip-path: var(--hud-clip-path);
+  }
+
+  .btn-scanline {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .btn-scanline::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 42, 42, 0.06) 2px,
+      rgba(255, 42, 42, 0.06) 4px
+    );
+    transition: opacity var(--duration-fast) var(--ease-standard);
+    pointer-events: none;
+  }
+
+  .btn-scanline:hover::before,
+  .btn-scanline:focus-visible::before {
+    opacity: 1;
+  }
+
+  .btn-scanline > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .gaming-menu-panel {
+    background:
+      linear-gradient(180deg, rgba(255, 42, 42, 0.04) 0%, transparent 40%),
+      var(--surface);
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 42, 42, 0.2),
+      0 0 40px rgba(255, 42, 42, 0.08);
+  }
+
+  .gaming-menu-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(255, 42, 42, 0.02) 3px,
+      rgba(255, 42, 42, 0.02) 6px
+    );
+  }
+
+  .status-pulse {
+    animation: status-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes status-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.6);
+    }
+
+    50% {
+      box-shadow: 0 0 0 6px rgba(255, 42, 42, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .status-pulse {
+      animation: none;
+    }
+
+    .btn-scanline::before {
+      transition: none;
+    }
   }
 }

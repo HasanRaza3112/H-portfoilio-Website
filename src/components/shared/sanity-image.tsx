@@ -33,7 +33,7 @@ export function SanityImage({
           "bg-surface-secondary flex items-center justify-center text-caption text-muted",
           className,
         )}
-        aria-hidden={alt ? undefined : true}
+        aria-hidden={alt ? undefined : "true"}
       >
         {alt ? <span className="sr-only">{alt}</span> : null}
       </div>

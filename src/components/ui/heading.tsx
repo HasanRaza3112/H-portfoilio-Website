@@ -3,27 +3,31 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-const headingVariants = cva("font-semibold tracking-tight text-foreground text-balance", {
-  variants: {
-    variant: {
-      display: "text-display",
-      h1: "text-h1",
-      h2: "text-h2",
-      h3: "text-h3",
-      h4: "text-h4",
-      overline: "text-overline uppercase text-muted font-medium tracking-widest",
+const headingVariants = cva(
+  "font-heading font-semibold tracking-tight text-foreground text-balance",
+  {
+    variants: {
+      variant: {
+        display: "text-display",
+        h1: "text-h1",
+        h2: "text-h2",
+        h3: "text-h3",
+        h4: "text-h4",
+        overline:
+          "text-overline uppercase text-muted font-medium tracking-widest",
+      },
+      tone: {
+        default: "text-foreground",
+        muted: "text-muted-foreground",
+        accent: "text-accent",
+      },
     },
-    tone: {
-      default: "text-foreground",
-      muted: "text-muted-foreground",
-      accent: "text-accent",
+    defaultVariants: {
+      variant: "h2",
+      tone: "default",
     },
   },
-  defaultVariants: {
-    variant: "h2",
-    tone: "default",
-  },
-});
+);
 
 type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "p" | "span";
 
@@ -40,7 +44,8 @@ const defaultElement: Record<
 };
 
 export interface HeadingProps
-  extends React.HTMLAttributes<HTMLHeadingElement>,
+  extends
+    React.HTMLAttributes<HTMLHeadingElement>,
     VariantProps<typeof headingVariants> {
   as?: HeadingLevel;
 }
@@ -57,7 +62,9 @@ function Heading({
 
   return (
     <Component
-      className={cn(headingVariants({ variant: resolvedVariant, tone, className }))}
+      className={cn(
+        headingVariants({ variant: resolvedVariant, tone, className }),
+      )}
       {...props}
     />
   );
