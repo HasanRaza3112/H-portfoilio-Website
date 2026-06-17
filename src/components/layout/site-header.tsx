@@ -59,7 +59,7 @@ function GamingNavLink({
         )}
         aria-hidden
       />
-      <span>{`// ${label.toUpperCase()}`}</span>
+      <span>{label.toUpperCase()}</span>
     </Link>
   );
 }
@@ -182,7 +182,7 @@ export function SiteHeader() {
           <div className="relative flex h-16 items-center justify-between border-b border-border-accent/40 px-6">
             <div className="flex flex-col gap-0.5">
               <span className="font-mono text-caption uppercase tracking-[0.2em] text-accent">
-                {`// NAV.TERM`}
+                {`NAV.TERM`}
               </span>
               <span className="font-mono text-[0.625rem] text-muted">
                 HASAN_RAZA_OS v1.0 · TACTICAL HUD
@@ -225,7 +225,7 @@ export function SiteHeader() {
                       )}
                       aria-hidden
                     />
-                    <span>{`// ${item.label.toUpperCase()}`}</span>
+                    <span>{item.label.toUpperCase()}</span>
                   </Link>
                 </li>
               );

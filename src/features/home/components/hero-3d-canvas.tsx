@@ -25,7 +25,7 @@ function Hero3DLoadingState() {
         Loading 3D Scene…
       </p>
       <p className="text-center font-mono text-[0.625rem] text-muted">
-        {`// AVATAR.SYS · RENDER_INIT`}
+        {`AVATAR.SYS · RENDER_INIT`}
       </p>
     </div>
   );
@@ -47,7 +47,7 @@ function Hero3DFallback() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-3 border border-dashed border-border-accent bg-surface-secondary/60 p-6 text-center">
       <span className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-accent">
-        {`// 3D_SCENE.PENDING`}
+        {`3D_SCENE.PENDING`}
       </span>
       <p className="max-w-xs font-mono text-caption text-muted">
         Set <code className="text-accent">NEXT_PUBLIC_SPLINE_HERO_URL</code> or{" "}
@@ -98,7 +98,7 @@ export function Hero3DCanvas({ className }: Hero3DCanvasProps) {
         className="pointer-events-none absolute top-3 left-4 z-20 font-mono text-[0.625rem] uppercase tracking-widest text-accent/80"
         aria-hidden
       >
-        {`// AVATAR.3D`}
+        {`AVATAR.3D`}
       </span>
       <span
         className="pointer-events-none absolute top-3 right-4 z-20 font-mono text-[0.625rem] uppercase tracking-widest text-muted"
