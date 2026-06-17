@@ -26,7 +26,7 @@ export function OsChangelogSection() {
   return (
     <Team2
       title="System Log"
-      description="HASAN_RAZA_OS // BUILD_HISTORY"
+      description="HASAN_RAZA_OS · BUILD_HISTORY"
       entries={portfolioChangelog}
       className="border-t border-border-subtle"
     />

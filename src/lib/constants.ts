@@ -7,10 +7,11 @@ export const DEFAULT_SITE_URL = "https://mohammedhasanraza.com";
 
 export const BRAND = {
   name: "Mohammed Hasan Raza",
-  title: "Technical Game Engineer",
-  tagline: "Building Games, Systems, and the Future I Once Dreamed of Playing.",
-  currentRole: "Junior Game Developer",
-  currentCompany: "ToBa Tech Solutions",
+  title: "Game Developer | SDK & Backend Engineer | Cross-Platform Specialist",
+  tagline:
+    "Entry-level Game Developer and SDK Engineer with production experience shipping cross-platform SDKs across 8 game engines: Unity, Unreal, Godot, C++, Java, JS/TS, Defold, Cocos2dx.",
+  currentRole: "Junior Game Developer & SDK Engineer",
+  currentCompany: "Toba Tech Solution",
 } as const;
 
 export type Brand = typeof BRAND;

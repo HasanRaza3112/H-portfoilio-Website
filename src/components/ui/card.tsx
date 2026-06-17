@@ -41,7 +41,7 @@ function Card({
   className,
   variant,
   padding,
-  hudLabel = "// PRJ.DAT",
+  hudLabel = "PRJ.DAT",
   children,
   ...props
 }: CardProps) {
@@ -57,7 +57,7 @@ function Card({
           className="pointer-events-none absolute top-2 right-3 z-10 font-mono text-[0.625rem] font-medium uppercase tracking-widest text-accent/70"
           aria-hidden
         >
-          {hudLabel.startsWith("//") ? hudLabel : `// ${hudLabel}`}
+          {hudLabel}
         </span>
       ) : null}
       {children}
