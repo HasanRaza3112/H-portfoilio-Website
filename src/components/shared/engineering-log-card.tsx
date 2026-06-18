@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { Badge } from "@/components/ui/8bit-badge";
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/8bit-card";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tag } from "@/components/ui/tag";
 import { cn } from "@/lib/utils";
 import type { EngineeringLogCard } from "@/types";
@@ -21,11 +21,15 @@ export function EngineeringLogCardLink({
       href={`/engineering/${log.slug}`}
       className={cn("group block h-full focus-visible:outline-none", className)}
     >
-      <Card className="flex h-full flex-col" font="normal">
-        <CardHeader className="gap-3" font="normal">
+      <Card
+        variant="interactive"
+        padding="none"
+        hudLabel=""
+        className="flex h-full flex-col overflow-hidden"
+      >
+        <CardHeader className="gap-3 p-5 pb-3">
           <div className="flex items-start justify-between gap-3">
             <CardTitle
-              font="normal"
               className="group-hover:text-accent transition-colors-token"
             >
               {log.title}
@@ -36,12 +40,12 @@ export function EngineeringLogCardLink({
             />
           </div>
           {log.summary ? (
-            <CardDescription font="normal" className="line-clamp-3">
+            <CardDescription className="line-clamp-3">
               {log.summary}
             </CardDescription>
           ) : null}
         </CardHeader>
-        <div className="mt-auto flex flex-wrap items-center gap-2 px-6 pb-6">
+        <div className="mt-auto flex flex-wrap items-center gap-2 p-5 pt-2">
           {log.category?.title ? (
             <Badge variant="default">{log.category.title}</Badge>
           ) : null}

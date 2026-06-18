@@ -10,8 +10,6 @@ import {
 } from "@/components/ui/8bit-card";
 import { Separator } from "@/components/ui/8bit-separator";
 
-import "@/components/ui/8bit/styles/retro.css";
-
 export interface ChangelogEntry {
   badge?: string;
   date: string;
@@ -31,7 +29,7 @@ const defaultEntries: ChangelogEntry[] = [
     date: "Mar 2026",
     title: "v2.0 — Hasan Raza OS",
     description:
-      "Red & black 8-bit gaming HUD theme, 3D hero canvas, and pixel-perfect navigation panel.",
+      "Red and black engineering UI, 3D hero canvas, and responsive navigation panel.",
     badge: "LATEST",
   },
   {
@@ -60,12 +58,12 @@ export default function Team2({
         {(title || description) && (
           <div className="mb-10 text-center">
             {title ? (
-              <h2 className="retro mb-3 text-2xl font-bold tracking-tight md:text-3xl">
+              <h2 className="mb-3 text-2xl font-bold tracking-tight md:text-3xl">
                 {title}
               </h2>
             ) : null}
             {description ? (
-              <p className="retro text-[9px] text-muted-foreground">
+              <p className="text-caption text-muted-foreground">
                 {description}
               </p>
             ) : null}
@@ -82,13 +80,13 @@ export default function Team2({
                   </div>
                 ) : null}
                 <CardHeader className="pb-2">
-                  <div className="retro mb-1 text-[10px] text-muted-foreground">
+                  <div className="mb-1 text-caption text-muted-foreground">
                     {entry.date}
                   </div>
-                  <CardTitle className="retro text-sm">{entry.title}</CardTitle>
+                  <CardTitle className="text-body-sm">{entry.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <CardDescription className="retro text-[9px] leading-relaxed">
+                  <CardDescription className="text-body-sm leading-relaxed">
                     {entry.description}
                   </CardDescription>
                 </CardContent>

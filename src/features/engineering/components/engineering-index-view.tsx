@@ -81,7 +81,7 @@ export function EngineeringIndexView({
         {filteredLogs.length > 0 ? (
           <div className="grid gap-6 md:grid-cols-2">
             {filteredLogs.map((log, index) => (
-              <MotionReveal key={log._id} delay={index * 0.04}>
+              <MotionReveal key={log._id} delay={index * 0.04} className="h-full">
                 <EngineeringLogCardLink log={log} />
               </MotionReveal>
             ))}

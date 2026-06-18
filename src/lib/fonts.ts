@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, Press_Start_2P } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 
 /**
  * Font configuration for Phase 5 layout shell.
@@ -16,11 +16,4 @@ export const geistMono = Geist_Mono({
   display: "swap",
 });
 
-export const pressStart = Press_Start_2P({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-retro",
-  display: "swap",
-});
-
-export const fontVariables = `${geistSans.variable} ${geistMono.variable} ${pressStart.variable}`;
+export const fontVariables = `${geistSans.variable} ${geistMono.variable}`;

@@ -5,7 +5,7 @@ const portfolioChangelog: ChangelogEntry[] = [
     date: "Mar 2026",
     title: "v2.0 — Hasan Raza OS",
     description:
-      "8-bit gaming HUD theme, pixel cards, holographic nav, and 3D developer hero canvas.",
+      "Engineering UI refresh, responsive cards, holographic nav, and 3D developer hero canvas.",
     badge: "LATEST",
   },
   {

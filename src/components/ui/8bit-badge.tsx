@@ -9,10 +9,6 @@ import { cn } from "@/lib/utils";
 
 export const badgeVariants = cva("", {
   variants: {
-    font: {
-      normal: "",
-      retro: "retro",
-    },
     variant: {
       default: "border-primary bg-primary",
       destructive: "border-destructive bg-destructive",
@@ -38,11 +34,10 @@ export interface BitBadgeProps
 function Badge({
   children,
   className = "",
-  font,
   variant,
   ...props
 }: BitBadgeProps) {
-  const color = badgeVariants({ variant, font });
+  const color = badgeVariants({ variant });
   const classes = className.split(" ").filter(Boolean);
 
   const visualClasses = classes.filter(
@@ -69,7 +64,6 @@ function Badge({
         {...props}
         className={cn(
           "h-full w-full rounded-none",
-          font !== "normal" && "retro",
           visualClasses,
         )}
         variant={variant}

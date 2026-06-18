@@ -29,7 +29,7 @@ export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionPro
       </div>
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         {projects.map((project, index) => (
-          <MotionReveal key={project._id} delay={index * 0.06}>
+          <MotionReveal key={project._id} delay={index * 0.06} className="h-full">
             <ProjectCardLink project={project} priorityImage={index === 0} />
           </MotionReveal>
         ))}
@@ -62,7 +62,7 @@ export function EngineeringFocusSection({ logs }: EngineeringFocusSectionProps) 
       </div>
       <div className="grid gap-6 md:grid-cols-2">
         {logs.map((log, index) => (
-          <MotionReveal key={log._id} delay={index * 0.06}>
+          <MotionReveal key={log._id} delay={index * 0.06} className="h-full">
             <EngineeringLogCardLink log={log} />
           </MotionReveal>
         ))}

@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "../styles/tokens.css";
-@import "../components/ui/8bit/styles/retro.css";
 
 @layer base {
   *,
@@ -125,6 +124,7 @@
   .glow-mesh {
     position: relative;
     isolation: isolate;
+    overflow: hidden;
   }
 
   .glow-mesh::before {

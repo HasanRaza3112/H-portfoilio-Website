@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/8bit-card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tag } from "@/components/ui/tag";
 import { cn } from "@/lib/utils";
 import type { DevlogCard } from "@/types";
@@ -29,12 +29,17 @@ export function DevlogCardLink({ devlog, className }: DevlogCardLinkProps) {
   return (
     <Link
       href={`/devlogs/${devlog.slug}`}
-      className={cn("group block focus-visible:outline-none", className)}
+      className={cn("group block h-full focus-visible:outline-none", className)}
     >
-      <Card className="h-full">
-        <CardHeader className="gap-3">
+      <Card
+        variant="interactive"
+        padding="none"
+        hudLabel=""
+        className="flex h-full flex-col overflow-hidden"
+      >
+        <CardHeader className="gap-3 p-5">
           <div className="flex items-start justify-between gap-4">
-            <div className="space-y-2">
+            <div className="min-w-0 space-y-2">
               {publishedLabel ? (
                 <time
                   className="text-caption text-muted"
@@ -56,7 +61,7 @@ export function DevlogCardLink({ devlog, className }: DevlogCardLinkProps) {
             <CardDescription className="line-clamp-2">{devlog.summary}</CardDescription>
           ) : null}
           {devlog.tags?.length ? (
-            <div className="flex flex-wrap gap-2 pt-1">
+            <div className="mt-auto flex flex-wrap gap-2 pt-1">
               {devlog.tags.slice(0, 4).map((tag) => (
                 <Tag key={tag} size="sm">
                   {tag}

@@ -28,7 +28,7 @@ export function LatestDevlogsSection({ devlogs }: LatestDevlogsSectionProps) {
       </div>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {devlogs.map((devlog, index) => (
-          <MotionReveal key={devlog._id} delay={index * 0.05}>
+          <MotionReveal key={devlog._id} delay={index * 0.05} className="h-full">
             <DevlogCardLink devlog={devlog} />
           </MotionReveal>
         ))}
