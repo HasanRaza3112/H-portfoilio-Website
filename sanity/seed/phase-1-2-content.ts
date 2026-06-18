@@ -70,6 +70,8 @@ export const SEED_EXPERIENCE_TOBA = {
     "colorcrush2d",
     "cricketx",
     "quizverse",
+    "level-rotator",
+    "cross-platform-sdks",
   ],
 } as const;
 

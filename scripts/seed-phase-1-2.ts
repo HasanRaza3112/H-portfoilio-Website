@@ -1,6 +1,5 @@
 /**
- * Seeds Phase 1 (Person Profile, Site Settings) and Phase 2 (Experience, Engineering Logs)
- * into Sanity CMS.
+ * Seeds Phase 1–2 CMS content: profile, experience, engineering logs, and projects.
  *
  * Usage:
  *   1. Copy .env.example → .env.local and fill Sanity + write token
@@ -20,6 +19,11 @@ import {
   SEED_EXPERIENCE_TOBA,
   SEED_PERSON_PROFILE,
 } from "../sanity/seed/phase-1-2-content";
+import {
+  PROJECT_CATEGORY_SEED,
+  resolveFeaturedProjectRefs,
+  SEED_PROJECTS,
+} from "../sanity/seed/project-content";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -222,6 +226,47 @@ async function main() {
     });
   }
 
+  console.log("Seeding project categories…");
+  for (const category of PROJECT_CATEGORY_SEED) {
+    await client.createOrReplace(category);
+  }
+
+  const projectCategoryRefs = Object.fromEntries(
+    PROJECT_CATEGORY_SEED.map((category) => [
+      category.slug.current,
+      { _type: "reference" as const, _ref: category._id },
+    ]),
+  );
+
+  console.log("Seeding Projects…");
+  for (const project of SEED_PROJECTS) {
+    await client.createOrReplace({
+      _id: project._id,
+      _type: "project",
+      title: project.title,
+      slug: { _type: "slug", current: project.slug },
+      description: project.description,
+      overview: project.overview,
+      category: projectCategoryRefs[project.categorySlug],
+      role: project.role,
+      duration: project.duration,
+      status: project.status,
+      technologies: [...project.technologies],
+      challenges: [...project.challenges],
+      solutions: [...project.solutions],
+      lessonsLearned: [...project.lessonsLearned],
+      featured: project.featured,
+      featuredRank: project.featuredRank,
+      relatedEngineeringLogs: project.relatedEngineeringLogIds.map((logId) => ({
+        _type: "reference" as const,
+        _ref: logId,
+        _key: logId,
+      })),
+      publishStatus: "published",
+      publishedAt: project.publishedAt,
+    });
+  }
+
   console.log("Seeding Homepage defaults…");
   await client.createOrReplace({
     _id: "homepage",
@@ -230,7 +275,7 @@ async function main() {
     showMissionSection: true,
     showExperienceSnapshot: true,
     showDevlogsSection: true,
-    featuredProjects: [],
+    featuredProjects: resolveFeaturedProjectRefs(),
     featuredEngineeringLogs: SEED_ENGINEERING_LOGS.map((log) => ({
       _type: "reference",
       _ref: log._id,
@@ -286,8 +331,9 @@ async function main() {
   console.log("- Site Settings + resume PDF + OG image");
   console.log("- ToBa Tech experience");
   console.log("- 2 engineering logs + categories");
-  console.log("- Homepage featured engineering + experience snapshot");
-  console.log("\nNext: run Phase 3 to seed projects and link references.");
+  console.log(`- ${SEED_PROJECTS.length} projects + project categories`);
+  console.log("- Homepage featured projects + engineering + experience snapshot");
+  console.log("\nRe-run this script safely — documents use createOrReplace by stable _id.");
 }
 
 main().catch((error) => {
