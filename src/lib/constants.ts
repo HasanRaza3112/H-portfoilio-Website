@@ -9,7 +9,7 @@ export const BRAND = {
   name: "Mohammed Hasan Raza",
   title: "Game Developer | SDK & Backend Engineer | Cross-Platform Specialist",
   tagline:
-    "Entry-level Game Developer and SDK Engineer with production experience shipping cross-platform SDKs across 8 game engines: Unity, Unreal, Godot, C++, Java, JS/TS, Defold, Cocos2dx.",
+    "Entry-level Game Developer and SDK Engineer with production experience shipping cross-platform SDKs across 8 game engines (Unity, Unreal, Godot, C++, Java, JS/TS, Defold, Cocos2dx).",
   currentRole: "Junior Game Developer & SDK Engineer",
   currentCompany: "Toba Tech Solution",
 } as const;

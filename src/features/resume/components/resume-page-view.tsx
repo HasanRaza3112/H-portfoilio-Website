@@ -1,3 +1,4 @@
+import { ResumeEducationSection } from "@/features/resume/components/resume-education-section";
 import { ResumeExpertiseSection } from "@/features/resume/components/resume-expertise-section";
 import { ResumeExperienceSection } from "@/features/resume/components/resume-experience-section";
 import { ResumeHeader } from "@/features/resume/components/resume-header";
@@ -21,6 +22,7 @@ export function ResumePageView({
       <ResumeSummarySection summary={profile?.professionalSummary} />
       <ResumeExpertiseSection expertiseAreas={profile?.expertiseAreas} />
       <ResumeExperienceSection experiences={experiences} />
+      <ResumeEducationSection />
     </div>
   );
 }

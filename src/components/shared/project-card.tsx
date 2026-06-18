@@ -1,16 +1,16 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
-import { Badge } from "@/components/ui/8bit-badge";
+import { SanityImage } from "@/components/shared/sanity-image";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/8bit-card";
+} from "@/components/ui/card";
 import { Tag } from "@/components/ui/tag";
-import { SanityImage } from "@/components/shared/sanity-image";
 import {
   projectStatusBadgeVariant,
   projectStatusLabels,
@@ -40,7 +40,12 @@ export function ProjectCardLink({
       href={`/projects/${project.slug}`}
       className={cn("group block h-full focus-visible:outline-none", className)}
     >
-      <Card className="flex h-full flex-col overflow-hidden">
+      <Card
+        variant="interactive"
+        padding="none"
+        hudLabel=""
+        className="flex h-full flex-col overflow-hidden"
+      >
         <SanityImage
           image={project.featuredImage}
           alt={project.featuredImage?.alt ?? project.title}
@@ -58,6 +63,11 @@ export function ProjectCardLink({
               aria-hidden
             />
           </div>
+          {project.duration ? (
+            <p className="font-mono text-caption uppercase tracking-wider text-accent/80">
+              {project.duration}
+            </p>
+          ) : null}
           {project.description ? (
             <CardDescription className="line-clamp-2">
               {project.description}

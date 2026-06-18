@@ -10,7 +10,7 @@ export function SiteFooter() {
     <footer className="relative border-t border-border-subtle py-section-sm glow-mesh">
       <Container className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-body-sm text-muted">
-          © {year} {BRAND.name}. Technical Game Engineer.
+          © {year} {BRAND.name}. {BRAND.title.split(" | ")[0]}.
         </p>
         <nav aria-label="Footer">
           <ul className="flex flex-wrap gap-4">

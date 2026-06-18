@@ -21,10 +21,13 @@ export function EngineeringLogCardLink({
       href={`/engineering/${log.slug}`}
       className={cn("group block h-full focus-visible:outline-none", className)}
     >
-      <Card className="flex h-full flex-col">
-        <CardHeader className="gap-3">
+      <Card className="flex h-full flex-col" font="normal">
+        <CardHeader className="gap-3" font="normal">
           <div className="flex items-start justify-between gap-3">
-            <CardTitle className="group-hover:text-accent transition-colors-token">
+            <CardTitle
+              font="normal"
+              className="group-hover:text-accent transition-colors-token"
+            >
               {log.title}
             </CardTitle>
             <ArrowUpRight
@@ -33,7 +36,9 @@ export function EngineeringLogCardLink({
             />
           </div>
           {log.summary ? (
-            <CardDescription className="line-clamp-3">{log.summary}</CardDescription>
+            <CardDescription font="normal" className="line-clamp-3">
+              {log.summary}
+            </CardDescription>
           ) : null}
         </CardHeader>
         <div className="mt-auto flex flex-wrap items-center gap-2 px-6 pb-6">

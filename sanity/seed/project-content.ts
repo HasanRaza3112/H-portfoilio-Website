@@ -9,11 +9,6 @@ export type ProjectCategorySlug =
 const STUDIO_ROLE = "Junior Game Developer & SDK Engineer";
 const PERSONAL_ROLE = "Game Developer";
 
-const PERSONAL_DESCRIPTION =
-  "Personal game project developed and published independently.";
-const PERSONAL_OVERVIEW =
-  "Independent title in the personal game portfolio, contributing to 100K+ combined downloads across solo releases.";
-
 export const PROJECT_CATEGORY_SEED = PROJECT_CATEGORIES.map((category) => ({
   _id: `projectCategory-${category.slug}`,
   _type: "projectCategory" as const,
@@ -62,9 +57,9 @@ export const SEED_PROJECTS = [
     title: "CricketX",
     categorySlug: "game-development" as const,
     description:
-      "Multiplayer cricket game with backend wallet, leaderboard, auth, ads, analytics, and native sharing.",
+      "Multiplayer cricket game with full backend (wallet, leaderboard, auth), ads, analytics, and native sharing.",
     overview:
-      "Multiplayer cricket title with 5K+ downloads and 200+ DAU. Integrated Nakama wallet, leaderboard, and auth with AdMob, Unity Ads, analytics, native sharing, and UI Toolkit.",
+      "Multiplayer cricket title with 5K+ downloads and 200+ DAU. Shipped wallet, leaderboard, auth, AdMob, Unity Ads, analytics, native sharing, and UI Toolkit integration.",
     role: STUDIO_ROLE,
     duration: "5K+ downloads · 200+ DAU",
     status: "shipped" as const,
@@ -150,7 +145,7 @@ export const SEED_PROJECTS = [
     title: "8 Cross-Platform SDKs",
     categorySlug: "sdk-engineering" as const,
     description:
-      "Contributed error fixes, build issue resolutions, and cross-platform publishing for 8 production SDKs.",
+      "Contributed error fixes, build issue resolutions, and cross-platform publishing for all 8 production SDKs.",
     overview:
       "Contributed error fixes, build issue resolutions, and cross-platform publishing across eight production SDKs for Unity, Unreal, Godot, C++, Java, JS/TS, Defold, and Cocos2dx.",
     role: STUDIO_ROLE,
@@ -185,17 +180,18 @@ export const SEED_PROJECTS = [
     slug: "galaxy-strike",
     title: "Galaxy Strike",
     categorySlug: "game-development" as const,
-    description: PERSONAL_DESCRIPTION,
-    overview: PERSONAL_OVERVIEW,
+    description: "Space shooter with enemy AI, wave management, and mobile touch controls.",
+    overview:
+      "Personal space shooter built in Unity with enemy AI, wave management, and mobile touch controls.",
     role: PERSONAL_ROLE,
     duration: "Personal release",
     status: "shipped" as const,
     technologies: ["Unity 3D", "C#"],
-    challenges: ["Independent game scope required solo development and release ownership."],
-    solutions: ["Developed and published the title as a personal project."],
-    lessonsLearned: [
-      "Personal releases build end-to-end shipping experience outside studio pipelines.",
+    challenges: ["Solo scope required enemy AI, wave pacing, and touch-first mobile controls."],
+    solutions: [
+      "Implemented enemy AI, wave management, and mobile touch controls for the space shooter loop.",
     ],
+    lessonsLearned: ["Touch controls and wave pacing define feel in mobile arcade shooters."],
     featured: false,
     featuredRank: 10,
     relatedEngineeringLogIds: [] as string[],
@@ -206,16 +202,22 @@ export const SEED_PROJECTS = [
     slug: "run-king-run",
     title: "Run King Run",
     categorySlug: "game-development" as const,
-    description: PERSONAL_DESCRIPTION,
-    overview: PERSONAL_OVERVIEW,
+    description:
+      "Endless runner with procedural level generation, obstacle spawning, and score tracking.",
+    overview:
+      "Personal endless runner with procedural level generation, obstacle spawning, and score tracking.",
     role: PERSONAL_ROLE,
     duration: "Personal release",
     status: "shipped" as const,
     technologies: ["Unity 3D", "C#"],
-    challenges: ["Independent game scope required solo development and release ownership."],
-    solutions: ["Developed and published the title as a personal project."],
+    challenges: [
+      "Endless runner scope required procedural levels, obstacle spawning, and reliable score tracking.",
+    ],
+    solutions: [
+      "Built procedural level generation, obstacle spawning, and score tracking for the runner loop.",
+    ],
     lessonsLearned: [
-      "Personal releases build end-to-end shipping experience outside studio pipelines.",
+      "Procedural spawning and score persistence anchor replayability in endless runners.",
     ],
     featured: false,
     featuredRank: 11,
@@ -227,16 +229,22 @@ export const SEED_PROJECTS = [
     slug: "sharpshooter-3d",
     title: "SharpShooter 3D",
     categorySlug: "game-development" as const,
-    description: PERSONAL_DESCRIPTION,
-    overview: PERSONAL_OVERVIEW,
+    description:
+      "First-person shooter with AI enemies, weapon switching, and level progression.",
+    overview:
+      "Personal first-person shooter featuring AI enemies, weapon switching, and level progression.",
     role: PERSONAL_ROLE,
     duration: "Personal release",
     status: "shipped" as const,
     technologies: ["Unity 3D", "C#"],
-    challenges: ["Independent game scope required solo development and release ownership."],
-    solutions: ["Developed and published the title as a personal project."],
+    challenges: [
+      "FPS scope required AI enemies, weapon switching, and structured level progression.",
+    ],
+    solutions: [
+      "Implemented AI enemies, weapon switching, and level progression for the shooter experience.",
+    ],
     lessonsLearned: [
-      "Personal releases build end-to-end shipping experience outside studio pipelines.",
+      "Weapon switching and enemy AI behavior define combat pacing in small-scope FPS titles.",
     ],
     featured: false,
     featuredRank: 12,
@@ -248,16 +256,22 @@ export const SEED_PROJECTS = [
     slug: "maze-bunker",
     title: "Maze Bunker",
     categorySlug: "game-development" as const,
-    description: PERSONAL_DESCRIPTION,
-    overview: PERSONAL_OVERVIEW,
+    description:
+      "Horror survival game featuring maze navigation, atmospheric lighting, and enemy AI.",
+    overview:
+      "Personal horror survival game with maze navigation, atmospheric lighting, and enemy AI.",
     role: PERSONAL_ROLE,
     duration: "Personal release",
     status: "shipped" as const,
     technologies: ["Unity 3D", "C#"],
-    challenges: ["Independent game scope required solo development and release ownership."],
-    solutions: ["Developed and published the title as a personal project."],
+    challenges: [
+      "Horror survival scope required maze navigation, lighting atmosphere, and enemy AI tension.",
+    ],
+    solutions: [
+      "Built maze navigation, atmospheric lighting, and enemy AI for the survival horror loop.",
+    ],
     lessonsLearned: [
-      "Personal releases build end-to-end shipping experience outside studio pipelines.",
+      "Lighting and navigation readability drive tension in horror maze experiences.",
     ],
     featured: false,
     featuredRank: 13,
@@ -269,16 +283,22 @@ export const SEED_PROJECTS = [
     slug: "hrtc-bus-sim",
     title: "HRTC Bus Sim",
     categorySlug: "game-development" as const,
-    description: PERSONAL_DESCRIPTION,
-    overview: PERSONAL_OVERVIEW,
+    description:
+      "Endless bus driving simulation with realistic physics and route management.",
+    overview:
+      "Personal endless bus driving simulation with realistic physics and route management.",
     role: PERSONAL_ROLE,
     duration: "Personal release",
     status: "shipped" as const,
     technologies: ["Unity 3D", "C#"],
-    challenges: ["Independent game scope required solo development and release ownership."],
-    solutions: ["Developed and published the title as a personal project."],
+    challenges: [
+      "Driving simulation scope required believable physics and manageable route systems.",
+    ],
+    solutions: [
+      "Implemented realistic driving physics and route management for the endless bus loop.",
+    ],
     lessonsLearned: [
-      "Personal releases build end-to-end shipping experience outside studio pipelines.",
+      "Physics tuning and route clarity matter more than map size in driving sims.",
     ],
     featured: false,
     featuredRank: 14,
@@ -290,16 +310,22 @@ export const SEED_PROJECTS = [
     slug: "slender-returns",
     title: "Slender Returns",
     categorySlug: "game-development" as const,
-    description: PERSONAL_DESCRIPTION,
-    overview: PERSONAL_OVERVIEW,
+    description:
+      "Prototype recreation of the classic Slender: The Eight Pages with enhanced atmosphere.",
+    overview:
+      "Personal prototype recreating Slender: The Eight Pages with enhanced atmosphere.",
     role: PERSONAL_ROLE,
     duration: "Personal release",
     status: "shipped" as const,
     technologies: ["Unity 3D", "C#"],
-    challenges: ["Independent game scope required solo development and release ownership."],
-    solutions: ["Developed and published the title as a personal project."],
+    challenges: [
+      "Prototype scope required faithful Slender-style tension with stronger atmospheric presentation.",
+    ],
+    solutions: [
+      "Recreated the classic Slender: The Eight Pages loop with enhanced atmosphere.",
+    ],
     lessonsLearned: [
-      "Personal releases build end-to-end shipping experience outside studio pipelines.",
+      "Atmosphere and audio carry horror prototypes more than feature breadth.",
     ],
     featured: false,
     featuredRank: 15,

@@ -164,7 +164,7 @@ async function main() {
     },
     defaultOgImage: {
       ...ogImage,
-      alt: "Mohammed Hasan Raza — Technical Game Engineer portfolio",
+      alt: "Mohammed Hasan Raza — Game Developer portfolio",
     },
   });
 
