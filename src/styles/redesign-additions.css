@@ -1,0 +1,241 @@
+/*
+ * REDESIGN ADDITIONS — additive layer on top of tokens.css
+ * Import this AFTER tokens.css in globals.css:
+ *   @import "../styles/redesign-additions.css";
+ *
+ * Nothing here overrides existing tokens. Safe to delete to revert.
+ */
+
+:root {
+  /* ─── Redesign: Cinematic depth ─── */
+  --glow-bleed-red: 0 0 80px rgba(255, 70, 85, 0.35), 0 0 160px rgba(255, 70, 85, 0.15);
+  --vignette-edge: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+  --scanline-gradient: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 2px,
+    rgba(255, 70, 85, 0.04) 2px,
+    rgba(255, 70, 85, 0.04) 3px
+  );
+  --hud-corner-size: 14px;
+  --hud-corner-thickness: 1.5px;
+  --hud-corner-color: var(--accent);
+}
+
+/* ─── HUD corner brackets — wrap any element ─── */
+.hud-frame {
+  position: relative;
+}
+.hud-frame::before,
+.hud-frame::after,
+.hud-frame > .hud-frame-bl,
+.hud-frame > .hud-frame-br {
+  content: "";
+  position: absolute;
+  width: var(--hud-corner-size);
+  height: var(--hud-corner-size);
+  border-color: var(--hud-corner-color);
+  border-style: solid;
+  border-width: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+.hud-frame::before { top: 0; left: 0; border-top-width: var(--hud-corner-thickness); border-left-width: var(--hud-corner-thickness); }
+.hud-frame::after  { top: 0; right: 0; border-top-width: var(--hud-corner-thickness); border-right-width: var(--hud-corner-thickness); }
+.hud-frame > .hud-frame-bl { bottom: 0; left: 0; border-bottom-width: var(--hud-corner-thickness); border-left-width: var(--hud-corner-thickness); }
+.hud-frame > .hud-frame-br { bottom: 0; right: 0; border-bottom-width: var(--hud-corner-thickness); border-right-width: var(--hud-corner-thickness); }
+
+/* ─── Scanline overlay — pure CSS, no DOM nodes ─── */
+.scanlines {
+  position: relative;
+}
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--scanline-gradient);
+  mix-blend-mode: overlay;
+  opacity: 0.6;
+  z-index: 6;
+}
+
+/* ─── Vignette edge ─── */
+.vignette {
+  position: relative;
+}
+.vignette::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--vignette-edge);
+  z-index: 4;
+}
+
+/* ─── Film-grain overlay (page-wide, fixed) ─── */
+.film-grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -8;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 200px 200px;
+}
+
+/* ─── Crimson volumetric glow behind 3D viewport ─── */
+.glow-bleed {
+  position: relative;
+}
+.glow-bleed::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  background: radial-gradient(
+    circle at 50% 55%,
+    rgba(255, 70, 85, 0.25),
+    transparent 60%
+  );
+  filter: blur(40px);
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ─── Animated scan sweep (hover) ─── */
+@keyframes scan-sweep {
+  0% { transform: translateY(-100%); opacity: 0; }
+  20% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+.scan-sweep-on-hover {
+  position: relative;
+  overflow: hidden;
+}
+.scan-sweep-on-hover::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 30%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(255, 70, 85, 0.18),
+    transparent
+  );
+  transform: translateY(-100%);
+  pointer-events: none;
+  z-index: 3;
+}
+.scan-sweep-on-hover:hover::before,
+.scan-sweep-on-hover:focus-visible::before {
+  animation: scan-sweep 1.2s var(--ease-out) forwards;
+}
+
+/* ─── Status panel readout digits ─── */
+.stat-readout {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: -0.02em;
+}
+
+/* ─── Scroll progress bar ─── */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2.5px;
+  width: 100%;
+  transform-origin: 0 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ─── Header solidify on scroll ─── */
+.header-elevated {
+  background-color: rgba(8, 8, 10, 0.92);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom-color: rgba(255, 70, 85, 0.35) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── HUD chip (footer socials) ─── */
+.hud-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: var(--transition-colors);
+}
+.hud-chip:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: var(--accent-subtle);
+  box-shadow: var(--shadow-glow-red);
+}
+
+/* ─── Signal pulse (footer) ─── */
+@keyframes signal-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.4); }
+}
+.signal-pulse {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: var(--success);
+  animation: signal-pulse 2s var(--ease-in-out) infinite;
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.6);
+}
+
+/* ─── Signal pulse (header brand) ─── */
+@keyframes pulse-signal {
+  0%, 100% { opacity: 0.4; transform: scale(1); box-shadow: 0 0 4px var(--accent); }
+  50% { opacity: 1; transform: scale(1.3); box-shadow: 0 0 12px var(--accent); }
+}
+.pulse-signal-square {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background-color: var(--accent);
+  animation: pulse-signal 2s var(--ease-in-out) infinite;
+}
+
+/* ─── Featured project hero card ─── */
+.featured-cinematic {
+  position: relative;
+  overflow: hidden;
+}
+.featured-cinematic::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(8, 8, 10, 0.95) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Count-up reveal helper ─── */
+@keyframes count-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.count-reveal {
+  animation: count-fade-in 0.6s var(--ease-emphasis) both;
+}

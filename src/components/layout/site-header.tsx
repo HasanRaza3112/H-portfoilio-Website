@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
 import { Container } from "@/components/layout/container";
+import { ScrollProgress } from "@/components/layout/scroll-progress";
 import { BRAND } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -67,9 +68,17 @@ function GamingNavLink({
 export function SiteHeader() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [elevated, setElevated] = useState(false);
 
   const closeMobileMenu = useCallback(() => {
     setMobileMenuOpen(false);
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setElevated(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
@@ -96,7 +105,13 @@ export function SiteHeader() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-border-accent/30 bg-background/80 backdrop-blur-md">
+      <ScrollProgress />
+      <header
+        className={cn(
+          "sticky top-0 z-50 border-b border-border-accent/20 bg-background/70 backdrop-blur-md transition-all duration-300",
+          elevated && "header-elevated",
+        )}
+      >
         <Container className="flex h-16 items-center justify-between gap-6">
           <Link
             href="/"
@@ -104,8 +119,9 @@ export function SiteHeader() {
             aria-label={`${BRAND.name} — Home`}
             onClick={closeMobileMenu}
           >
-            <span className="font-mono text-body-sm font-semibold uppercase tracking-widest text-foreground transition-colors-token group-hover:text-accent">
-              {BRAND.name}
+            <span className="flex items-center gap-2 font-mono text-body-sm font-semibold uppercase tracking-widest text-foreground transition-colors-token group-hover:text-accent">
+              <span className="pulse-signal-square" aria-hidden />
+              HR_//
             </span>
             <span className="font-mono text-caption text-muted hidden sm:block">
               {BRAND.title}
@@ -178,6 +194,8 @@ export function SiteHeader() {
             "gaming-menu-panel absolute inset-y-0 right-0 flex w-full max-w-sm flex-col border-l border-border-accent transition-transform duration-300 ease-out",
             mobileMenuOpen ? "translate-x-0" : "translate-x-full",
           )}
+          role="dialog"
+          aria-modal="true"
         >
           <div className="relative flex h-16 items-center justify-between border-b border-border-accent/40 px-6">
             <div className="flex flex-col gap-0.5">
@@ -203,13 +221,20 @@ export function SiteHeader() {
               const active = isNavActive(pathname, item.href);
 
               return (
-                <li key={item.href}>
+                <li
+                  key={item.href}
+                  style={{
+                    animation: mobileMenuOpen
+                      ? `fade-in 0.4s var(--ease-emphasis) ${index * 60}ms both`
+                      : undefined,
+                  }}
+                >
                   <Link
                     href={item.href}
                     onClick={closeMobileMenu}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "nav-console-link group flex items-center gap-3 rounded-none border border-transparent px-4 py-3 font-mono text-body-lg font-medium uppercase tracking-widest transition-colors-token",
+                      "nav-console-link group flex min-h-12 items-center gap-3 rounded-none border border-transparent px-4 py-3 font-mono text-body-lg font-medium uppercase tracking-widest transition-colors-token",
                       active
                         ? "nav-console-link--active border-border-accent bg-accent-subtle text-accent shadow-glow-red"
                         : "text-foreground hover:border-border-accent hover:bg-surface-secondary hover:text-accent",

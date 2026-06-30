@@ -8,7 +8,6 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import { Tag } from "@/components/ui/tag";
 import {
@@ -24,6 +23,10 @@ interface ProjectCardLinkProps {
   priorityImage?: boolean;
 }
 
+/**
+ * Compact HUD mini-card (aspect-[4/5]).
+ * Crimson left-border on hover, translate-y upwards, and scanline sweep.
+ */
 export function ProjectCardLink({
   project,
   className,
@@ -44,50 +47,142 @@ export function ProjectCardLink({
         variant="interactive"
         padding="none"
         hudLabel=""
-        className="flex h-full flex-col overflow-hidden"
+        className={cn(
+          "scan-sweep-on-hover relative flex h-full flex-col overflow-hidden bg-[var(--color-obsidian-2)]",
+          "border-l-2 border-l-transparent transition-all duration-[180ms] ease-out",
+          "group-hover:border-l-[var(--color-crimson)] group-hover:shadow-glow-red group-hover:-translate-y-0.5",
+        )}
       >
-        <SanityImage
-          image={project.featuredImage}
-          alt={project.featuredImage?.alt ?? project.title}
-          className="aspect-[16/10] w-full border-b border-border-subtle"
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          priority={priorityImage}
-        />
-        <CardHeader className="gap-3 p-5 pb-2">
+        <div className="relative overflow-hidden aspect-[16/10] w-full">
+          <SanityImage
+            image={project.featuredImage}
+            alt={project.featuredImage?.alt ?? project.title}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority={priorityImage}
+            fill={true}
+          />
+        </div>
+        <CardHeader className="gap-2 p-5 pb-2">
           <div className="flex items-start justify-between gap-3">
-            <CardTitle className="group-hover:text-accent transition-colors-token">
+            <h3 className="font-heading text-body-sm font-semibold text-foreground group-hover:text-accent transition-colors duration-150">
               {project.title}
-            </CardTitle>
+            </h3>
             <ArrowUpRight
-              className="size-4 shrink-0 text-muted opacity-0 transition-opacity group-hover:opacity-100"
+              className="size-4 shrink-0 text-muted transition-all duration-150 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
               aria-hidden
             />
           </div>
-          {project.duration ? (
-            <p className="font-mono text-caption uppercase tracking-wider text-accent/80">
-              {project.duration}
-            </p>
-          ) : null}
           {project.description ? (
-            <CardDescription className="line-clamp-2">
+            <CardDescription className="line-clamp-1 text-caption text-muted">
               {project.description}
             </CardDescription>
           ) : null}
         </CardHeader>
-        <CardContent className="mt-auto flex flex-wrap items-center gap-2 p-5 pt-2">
+        <CardContent className="mt-auto flex flex-wrap items-center gap-1.5 p-5 pt-2">
           {statusLabel ? (
-            <Badge variant={badgeVariant as "default"}>{statusLabel}</Badge>
+            <Badge variant={badgeVariant as "default"} className="text-[10px] px-1.5 py-0.5">{statusLabel}</Badge>
           ) : null}
           {project.category?.title ? (
-            <Badge variant="outline">{project.category.title}</Badge>
+            <Badge variant="outline" className="text-[10px] px-1.5 py-0.5">{project.category.title}</Badge>
           ) : null}
-          {project.technologies?.slice(0, 3).map((tech) => (
-            <Tag key={tech} variant="mono" size="sm">
+          {project.technologies?.slice(0, 2).map((tech) => (
+            <Tag key={tech} variant="mono" size="sm" className="text-[9px]">
               {tech}
             </Tag>
           ))}
         </CardContent>
       </Card>
+    </Link>
+  );
+}
+
+interface FeaturedProjectCardProps {
+  project: ProjectCard;
+  priorityImage?: boolean;
+}
+
+/**
+ * Cinematic 21:9 full-width featured project card with HUD corner brackets.
+ */
+export function FeaturedProjectCard({
+  project,
+  priorityImage = true,
+}: FeaturedProjectCardProps) {
+  const status = project.status;
+  const statusLabel = status ? projectStatusLabels[status] : null;
+  const badgeVariant = status
+    ? projectStatusBadgeVariant[status]
+    : "secondary";
+
+  return (
+    <Link
+      href={`/projects/${project.slug}`}
+      className="group block focus-visible:outline-none"
+      aria-label={`Featured project — ${project.title}`}
+    >
+      <article className="hud-frame featured-cinematic scan-sweep-on-hover relative w-full overflow-hidden border border-border-accent/40 bg-surface-secondary/40 shadow-elevated transition-all duration-300 group-hover:shadow-glow-crimson hud-clip-lg">
+        <span className="hud-frame-bl" aria-hidden />
+        <span className="hud-frame-br" aria-hidden />
+
+        <span
+          className="pointer-events-none absolute left-4 top-3 z-20 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-accent"
+          aria-hidden
+        >
+          FEATURED · MISSION
+        </span>
+
+        {/* aspect-ratio: 16:9 on mobile, 21:9 on desktop */}
+        <div className="relative aspect-[16/9] w-full md:aspect-[21/9]">
+          <SanityImage
+            image={project.featuredImage}
+            alt={project.featuredImage?.alt ?? project.title}
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            sizes="100vw"
+            priority={priorityImage}
+            fill={true}
+          />
+        </div>
+
+        {/* Overlay gradient details bottom left */}
+        <div className="relative z-10 -mt-32 flex flex-col gap-4 px-5 pb-6 pt-6 md:-mt-44 md:px-8 md:pb-8">
+          <div className="flex flex-wrap items-center gap-2">
+            {statusLabel ? (
+              <Badge variant={badgeVariant as "default"}>{statusLabel}</Badge>
+            ) : null}
+            {project.category?.title ? (
+              <Badge variant="outline">{project.category.title}</Badge>
+            ) : null}
+            {project.duration ? (
+              <span className="font-mono text-caption uppercase tracking-wider text-accent/80">
+                {project.duration}
+              </span>
+            ) : null}
+          </div>
+          
+          <h2 className="font-heading text-h1 text-foreground text-balance transition-colors duration-150 group-hover:text-accent">
+            {project.title}
+          </h2>
+          
+          {project.description ? (
+            <p className="max-w-2xl text-body-lg text-muted text-pretty line-clamp-2">
+              {project.description}
+            </p>
+          ) : null}
+          
+          <div className="mt-2 flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-2 font-mono text-body-sm uppercase tracking-widest text-accent transition-transform duration-150 group-hover:translate-x-1">
+              VIEW MISSION →
+              <ArrowUpRight className="size-4" aria-hidden />
+            </span>
+            {project.technologies?.slice(0, 4).map((tech) => (
+              <Tag key={tech} variant="mono" size="sm">
+                {tech}
+              </Tag>
+            ))}
+          </div>
+        </div>
+      </article>
     </Link>
   );
 }

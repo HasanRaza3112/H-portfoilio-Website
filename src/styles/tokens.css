@@ -310,4 +310,25 @@
   --container-narrow: var(--container-narrow);
   --container-content: var(--container-content);
   --container-wide: var(--container-wide);
+
+  /* HUD additions */
+  --color-crimson: #ff4655;
+  --color-crimson-glow: #ff465533;
+  --color-obsidian: #08080a;
+  --color-obsidian-2: #0d0d10;
+  --color-hud-line: #ff465522;
+  --color-hud-text: #c8c9cc;
+
+  --shadow-hud-glow: 0 0 40px #ff465533, 0 0 80px #ff46551a;
+  --shadow-card-hover: 0 12px 32px -8px #ff465533;
+
+  /* clip path for HUD corners */
+  --hud-clip-corner-lg: polygon(
+    16px 0, 100% 0, 100% calc(100% - 16px),
+    calc(100% - 16px) 100%, 0 100%, 0 16px
+  );
+  --hud-clip-corner-sm: polygon(
+    8px 0, 100% 0, 100% calc(100% - 8px),
+    calc(100% - 8px) 100%, 0 100%, 0 8px
+  );
 }

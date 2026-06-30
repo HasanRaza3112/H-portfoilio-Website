@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "../styles/tokens.css";
+@import "../styles/redesign-additions.css";
 
 @layer base {
   *,
@@ -378,4 +379,31 @@
       transition: none;
     }
   }
+
+  .hud-clip-lg { clip-path: var(--hud-clip-corner-lg); }
+  .hud-clip-sm { clip-path: var(--hud-clip-corner-sm); }
+  .glow-crimson { box-shadow: var(--shadow-hud-glow); }
+  .scanlines-bg {
+    background-image: repeating-linear-gradient(
+      0deg, transparent 0, transparent 2px,
+      rgba(255,70,85,0.04) 2px, rgba(255,70,85,0.04) 3px
+    );
+  }
+  .vignette-edge {
+    mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
+    -webkit-mask-image: radial-gradient(ellipse at center, #000 55%, transparent 100%);
+  }
+}
+
+/* Fixed grain — sits above all content but below modals */
+body::after {
+  content: "";
+  position: fixed; inset: 0; pointer-events: none; z-index: 40;
+  opacity: 0.03; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background-size: 200px 200px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
