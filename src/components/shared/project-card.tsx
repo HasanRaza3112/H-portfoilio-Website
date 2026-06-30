@@ -25,7 +25,7 @@ interface ProjectCardLinkProps {
 
 /**
  * Compact HUD mini-card (aspect-[4/5]).
- * Crimson left-border on hover, translate-y upwards, and scanline sweep.
+ * Uses the premium liquid-glass design.
  */
 export function ProjectCardLink({
   project,
@@ -48,9 +48,8 @@ export function ProjectCardLink({
         padding="none"
         hudLabel=""
         className={cn(
-          "scan-sweep-on-hover relative flex h-full flex-col overflow-hidden bg-[var(--color-obsidian-2)]",
-          "border-l-2 border-l-transparent transition-all duration-[180ms] ease-out",
-          "group-hover:border-l-[var(--color-crimson)] group-hover:shadow-glow-red group-hover:-translate-y-0.5",
+          "scan-sweep-on-hover relative flex h-full flex-col overflow-hidden liquid-glass",
+          "group-hover:-translate-y-0.5",
         )}
       >
         <div className="relative overflow-hidden aspect-[16/10] w-full">
@@ -65,7 +64,7 @@ export function ProjectCardLink({
         </div>
         <CardHeader className="gap-2 p-5 pb-2">
           <div className="flex items-start justify-between gap-3">
-            <h3 className="font-heading text-body-sm font-semibold text-foreground group-hover:text-accent transition-colors duration-150">
+            <h3 className="font-heading text-body-sm font-semibold text-foreground group-hover:text-accent transition-colors duration-150 break-words">
               {project.title}
             </h3>
             <ArrowUpRight
@@ -74,7 +73,7 @@ export function ProjectCardLink({
             />
           </div>
           {project.description ? (
-            <CardDescription className="line-clamp-1 text-caption text-muted">
+            <CardDescription className="line-clamp-2 text-caption text-muted">
               {project.description}
             </CardDescription>
           ) : null}
@@ -104,6 +103,7 @@ interface FeaturedProjectCardProps {
 
 /**
  * Cinematic 21:9 full-width featured project card with HUD corner brackets.
+ * Uses the premium liquid-glass design.
  */
 export function FeaturedProjectCard({
   project,
@@ -121,16 +121,9 @@ export function FeaturedProjectCard({
       className="group block focus-visible:outline-none"
       aria-label={`Featured project — ${project.title}`}
     >
-      <article className="hud-frame featured-cinematic scan-sweep-on-hover relative w-full overflow-hidden border border-border-accent/40 bg-surface-secondary/40 shadow-elevated transition-all duration-300 group-hover:shadow-glow-crimson hud-clip-lg">
+      <article className="hud-frame featured-cinematic scan-sweep-on-hover relative w-full overflow-hidden liquid-glass hud-clip-lg">
         <span className="hud-frame-bl" aria-hidden />
         <span className="hud-frame-br" aria-hidden />
-
-        <span
-          className="pointer-events-none absolute left-4 top-3 z-20 font-mono text-[0.625rem] uppercase tracking-[0.2em] text-accent"
-          aria-hidden
-        >
-          FEATURED · MISSION
-        </span>
 
         {/* aspect-ratio: 16:9 on mobile, 21:9 on desktop */}
         <div className="relative aspect-[16/9] w-full md:aspect-[21/9]">

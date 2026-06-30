@@ -121,7 +121,7 @@ export function SiteHeader() {
           >
             <span className="flex items-center gap-2 font-mono text-body-sm font-semibold uppercase tracking-widest text-foreground transition-colors-token group-hover:text-accent">
               <span className="pulse-signal-square" aria-hidden />
-              HR_//
+              MAX
             </span>
             <span className="font-mono text-caption text-muted hidden sm:block">
               {BRAND.title}
@@ -191,21 +191,16 @@ export function SiteHeader() {
         <nav
           aria-label="Mobile primary"
           className={cn(
-            "gaming-menu-panel absolute inset-y-0 right-0 flex w-full max-w-sm flex-col border-l border-border-accent transition-transform duration-300 ease-out",
+            "liquid-glass absolute inset-y-0 right-0 flex w-full max-w-sm flex-col border-l border-border-accent/40 transition-transform duration-300 ease-out",
             mobileMenuOpen ? "translate-x-0" : "translate-x-full",
           )}
           role="dialog"
           aria-modal="true"
         >
           <div className="relative flex h-16 items-center justify-between border-b border-border-accent/40 px-6">
-            <div className="flex flex-col gap-0.5">
-              <span className="font-mono text-caption uppercase tracking-[0.2em] text-accent">
-                {`NAV.TERM`}
-              </span>
-              <span className="font-mono text-[0.625rem] text-muted">
-                HASAN_RAZA_OS v1.0 · TACTICAL HUD
-              </span>
-            </div>
+            <span className="font-mono text-body-sm font-semibold uppercase tracking-widest text-foreground">
+              Navigation
+            </span>
             <button
               type="button"
               className="inline-flex size-10 items-center justify-center rounded-none border border-border-accent text-accent transition-colors-token hover:bg-accent-subtle hover:shadow-glow-red focus-visible:outline-none"
@@ -256,14 +251,6 @@ export function SiteHeader() {
               );
             })}
           </ul>
-
-          <div className="relative border-t border-border-accent/40 px-6 py-4">
-            <p className="font-mono text-[0.625rem] uppercase tracking-widest text-muted">
-              SYS_STATUS: <span className="text-success">ONLINE</span>
-              <span className="mx-2 text-border-strong">|</span>
-              <span className="text-amber">LINK: SECURE</span>
-            </p>
-          </div>
         </nav>
       </div>
     </>
