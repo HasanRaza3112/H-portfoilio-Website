@@ -39,7 +39,7 @@ function SiteBackgroundCanvas() {
       {prefersReducedMotion ? null : (
         <SparklesCore
           className="absolute inset-0 h-full w-full"
-          background="#08080a"
+          background="#0c0e12"
           particleColor="#ff4655"
           minSize={0.4}
           maxSize={2.2}

@@ -52,7 +52,7 @@ export function ProjectCardLink({
           "group-hover:-translate-y-0.5",
         )}
       >
-        <div className="relative overflow-hidden aspect-[16/10] w-full">
+        <div className="relative overflow-hidden aspect-[16/10] w-full shrink-0">
           <SanityImage
             image={project.featuredImage}
             alt={project.featuredImage?.alt ?? project.title}
@@ -103,7 +103,8 @@ interface FeaturedProjectCardProps {
 
 /**
  * Cinematic 21:9 full-width featured project card with HUD corner brackets.
- * Uses the premium liquid-glass design.
+ * Uses a clean absolute background overlay to completely eliminate negative margins,
+ * preventing layout overflows on all screens.
  */
 export function FeaturedProjectCard({
   project,
@@ -125,8 +126,8 @@ export function FeaturedProjectCard({
         <span className="hud-frame-bl" aria-hidden />
         <span className="hud-frame-br" aria-hidden />
 
-        {/* aspect-ratio: 16:9 on mobile, 21:9 on desktop */}
-        <div className="relative aspect-[16/9] w-full md:aspect-[21/9]">
+        {/* Outer overlay container that acts as a background canvas */}
+        <div className="relative w-full min-h-[380px] md:min-h-[460px] flex flex-col justify-end">
           <SanityImage
             image={project.featuredImage}
             alt={project.featuredImage?.alt ?? project.title}
@@ -135,44 +136,44 @@ export function FeaturedProjectCard({
             priority={priorityImage}
             fill={true}
           />
-        </div>
-
-        {/* Overlay gradient details bottom left */}
-        <div className="relative z-10 -mt-32 flex flex-col gap-4 px-5 pb-6 pt-6 md:-mt-44 md:px-8 md:pb-8">
-          <div className="flex flex-wrap items-center gap-2">
-            {statusLabel ? (
-              <Badge variant={badgeVariant as "default"}>{statusLabel}</Badge>
+          
+          {/* Overlay gradient details bottom left */}
+          <div className="relative z-10 flex flex-col gap-4 p-6 md:p-8">
+            <div className="flex flex-wrap items-center gap-2">
+              {statusLabel ? (
+                <Badge variant={badgeVariant as "default"}>{statusLabel}</Badge>
+              ) : null}
+              {project.category?.title ? (
+                <Badge variant="outline">{project.category.title}</Badge>
+              ) : null}
+              {project.duration ? (
+                <span className="font-mono text-caption uppercase tracking-wider text-accent/80">
+                  {project.duration}
+                </span>
+              ) : null}
+            </div>
+            
+            <h2 className="font-heading text-h2 md:text-h1 text-foreground text-balance transition-colors duration-150 group-hover:text-accent">
+              {project.title}
+            </h2>
+            
+            {project.description ? (
+              <p className="max-w-2xl text-body-md md:text-body-lg text-muted text-pretty line-clamp-2">
+                {project.description}
+              </p>
             ) : null}
-            {project.category?.title ? (
-              <Badge variant="outline">{project.category.title}</Badge>
-            ) : null}
-            {project.duration ? (
-              <span className="font-mono text-caption uppercase tracking-wider text-accent/80">
-                {project.duration}
+            
+            <div className="mt-2 flex flex-wrap items-center gap-3">
+              <span className="inline-flex items-center gap-2 font-mono text-body-sm uppercase tracking-widest text-accent transition-transform duration-150 group-hover:translate-x-1">
+                VIEW MISSION →
+                <ArrowUpRight className="size-4" aria-hidden />
               </span>
-            ) : null}
-          </div>
-          
-          <h2 className="font-heading text-h1 text-foreground text-balance transition-colors duration-150 group-hover:text-accent">
-            {project.title}
-          </h2>
-          
-          {project.description ? (
-            <p className="max-w-2xl text-body-lg text-muted text-pretty line-clamp-2">
-              {project.description}
-            </p>
-          ) : null}
-          
-          <div className="mt-2 flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 font-mono text-body-sm uppercase tracking-widest text-accent transition-transform duration-150 group-hover:translate-x-1">
-              VIEW MISSION →
-              <ArrowUpRight className="size-4" aria-hidden />
-            </span>
-            {project.technologies?.slice(0, 4).map((tech) => (
-              <Tag key={tech} variant="mono" size="sm">
-                {tech}
-              </Tag>
-            ))}
+              {project.technologies?.slice(0, 4).map((tech) => (
+                <Tag key={tech} variant="mono" size="sm">
+                  {tech}
+                </Tag>
+              ))}
+            </div>
           </div>
         </div>
       </article>

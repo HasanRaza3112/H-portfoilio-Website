@@ -12,7 +12,7 @@
   --vignette-edge: radial-gradient(
     ellipse at center,
     transparent 55%,
-    rgba(0, 0, 0, 0.55) 100%
+    rgba(0, 0, 0, 0.5) 100%
   );
   --scanline-gradient: repeating-linear-gradient(
     to bottom,
@@ -28,14 +28,16 @@
 
 /* ─── Liquid Glass Style ─── */
 .liquid-glass {
-  background: rgba(13, 13, 18, 0.45);
-  backdrop-filter: blur(16px) saturate(130%);
-  -webkit-backdrop-filter: blur(16px) saturate(130%);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  clip-path: none !important; /* Disable sharp default clips to prevent border & text cutoffs */
+  border-radius: 12px;
+  background: rgba(18, 21, 30, 0.75);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.09);
   box-shadow: 
-    0 8px 32px 0 rgba(0, 0, 0, 0.5),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.08),
-    inset 0 0 16px 0 rgba(255, 70, 85, 0.03);
+    0 10px 40px 0 rgba(0, 0, 0, 0.45),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.12),
+    inset 0 0 20px 0 rgba(255, 70, 85, 0.04);
   transition: border-color var(--duration-fast) var(--ease-standard),
               box-shadow var(--duration-fast) var(--ease-standard),
               background-color var(--duration-fast) var(--ease-standard),
@@ -43,11 +45,11 @@
 }
 
 .liquid-glass:hover {
-  border-color: rgba(255, 70, 85, 0.25);
-  background: rgba(13, 13, 18, 0.55);
+  border-color: rgba(255, 70, 85, 0.35);
+  background: rgba(18, 21, 30, 0.85);
   box-shadow: 
-    0 12px 40px 0 rgba(0, 0, 0, 0.6),
-    inset 0 1px 1px 0 rgba(255, 255, 255, 0.12),
+    0 15px 50px 0 rgba(0, 0, 0, 0.55),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.18),
     var(--shadow-glow-red);
 }
 
@@ -69,10 +71,10 @@
   pointer-events: none;
   z-index: 5;
 }
-.hud-frame::before { top: 0; left: 0; border-top-width: var(--hud-corner-thickness); border-left-width: var(--hud-corner-thickness); }
-.hud-frame::after  { top: 0; right: 0; border-top-width: var(--hud-corner-thickness); border-right-width: var(--hud-corner-thickness); }
-.hud-frame > .hud-frame-bl { bottom: 0; left: 0; border-bottom-width: var(--hud-corner-thickness); border-left-width: var(--hud-corner-thickness); }
-.hud-frame > .hud-frame-br { bottom: 0; right: 0; border-bottom-width: var(--hud-corner-thickness); border-right-width: var(--hud-corner-thickness); }
+.hud-frame::before { top: -1px; left: -1px; border-top-width: var(--hud-corner-thickness); border-left-width: var(--hud-corner-thickness); }
+.hud-frame::after  { top: -1px; right: -1px; border-top-width: var(--hud-corner-thickness); border-right-width: var(--hud-corner-thickness); }
+.hud-frame > .hud-frame-bl { bottom: -1px; left: -1px; border-bottom-width: var(--hud-corner-thickness); border-left-width: var(--hud-corner-thickness); }
+.hud-frame > .hud-frame-br { bottom: -1px; right: -1px; border-bottom-width: var(--hud-corner-thickness); border-right-width: var(--hud-corner-thickness); }
 
 /* ─── Scanline overlay — pure CSS, no DOM nodes ─── */
 .scanlines {
@@ -85,8 +87,9 @@
   pointer-events: none;
   background-image: var(--scanline-gradient);
   mix-blend-mode: overlay;
-  opacity: 0.6;
+  opacity: 0.5;
   z-index: 6;
+  border-radius: inherit;
 }
 
 /* ─── Vignette edge ─── */
@@ -108,7 +111,7 @@
   inset: 0;
   z-index: -8;
   pointer-events: none;
-  opacity: 0.05;
+  opacity: 0.02; /* Extremely subtle to ensure maximum text readability */
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
   background-size: 200px 200px;
@@ -150,7 +153,7 @@
   background: linear-gradient(
     to bottom,
     transparent,
-    rgba(255, 70, 85, 0.18),
+    rgba(255, 70, 85, 0.15),
     transparent
   );
   transform: translateY(-100%);
@@ -186,11 +189,11 @@
 
 /* ─── Header solidify on scroll ─── */
 .header-elevated {
-  background-color: rgba(8, 8, 10, 0.75);
-  backdrop-filter: blur(16px) saturate(130%);
-  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  background-color: rgba(12, 14, 18, 0.85);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
   border-bottom-color: rgba(255, 70, 85, 0.25) !important;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
 }
 
 /* ─── HUD chip (footer socials) ─── */
@@ -201,7 +204,7 @@
   width: 2.25rem;
   height: 2.25rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
+  border-radius: 6px;
   color: var(--text-muted);
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(4px);
@@ -253,8 +256,8 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    transparent 40%,
-    rgba(8, 8, 10, 0.95) 100%
+    transparent 35%,
+    rgba(12, 14, 18, 0.98) 100%
   );
   pointer-events: none;
   z-index: 1;

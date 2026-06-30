@@ -8,18 +8,18 @@
   color-scheme: dark;
 
   /* ─── Color: Base ─── */
-  --background: #08080a;
-  --foreground: #eef0f4;
-  --surface: #0d0d12;
-  --surface-secondary: #14141b;
-  --surface-elevated: #1b1b24;
-  --surface-overlay: #22222c;
+  --background: #0c0e12;
+  --foreground: #f1f5f9;
+  --surface: #12151d;
+  --surface-secondary: #191c28;
+  --surface-elevated: #212534;
+  --surface-overlay: #2a2e41;
 
   /* ─── Color: Text ─── */
-  --text-primary: #eef0f4;
-  --text-secondary: #8b93a3;
-  --text-tertiary: #6b7280;
-  --text-muted: #b4bac6;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --text-muted: #cbd5e1;
 
   /* ─── Color: Accent & Status ─── */
   --accent: #ff4655;
@@ -47,10 +47,10 @@
   --destructive-subtle: rgb(239 68 68 / 12%);
 
   /* ─── Color: Border ─── */
-  --border: #1a1a24;
-  --border-subtle: #13131a;
-  --border-strong: #2a2a36;
-  --border-accent: rgba(255, 70, 85, 0.3);
+  --border: #202431;
+  --border-subtle: #171a24;
+  --border-strong: #2e3346;
+  --border-accent: rgba(255, 70, 85, 0.35);
 
   /* ─── Typography: Families ─── */
   --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, sans-serif);
@@ -314,10 +314,10 @@
   /* HUD additions */
   --color-crimson: #ff4655;
   --color-crimson-glow: #ff465533;
-  --color-obsidian: #08080a;
-  --color-obsidian-2: #0d0d10;
+  --color-obsidian: #0c0e12;
+  --color-obsidian-2: #12151d;
   --color-hud-line: #ff465522;
-  --color-hud-text: #c8c9cc;
+  --color-hud-text: #e2e8f0;
 
   --shadow-hud-glow: 0 0 40px #ff465533, 0 0 80px #ff46551a;
   --shadow-card-hover: 0 12px 32px -8px #ff465533;
