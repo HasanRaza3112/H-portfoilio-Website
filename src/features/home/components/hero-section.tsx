@@ -8,11 +8,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Tag } from "@/components/ui/tag";
-import { Hero3DCanvas } from "@/features/home/components/hero-3d-canvas";
 import {
-  resolveHeroEyebrow,
   resolvePersonProfile,
 } from "@/features/home/lib/home-data";
+import { HeroParallaxWrapper, TypingCallsign, ClientHero3DCanvas } from "./hero-client-components";
 import type { HomePageData } from "@/types";
 
 interface HeroSectionProps {
@@ -41,75 +40,127 @@ function OpenToWorkIndicator() {
 
 export function HeroSection({ data }: HeroSectionProps) {
   const profile = resolvePersonProfile(data?.personProfile);
-  const eyebrow = resolveHeroEyebrow(
-    data?.homepage?.heroEyebrow,
-    data?.personProfile,
-  );
+  const callsignText = `CALLSIGN · ${profile.name.toUpperCase().replace(/\s+/g, ".")}`;
 
   return (
     <section
       aria-labelledby="hero-heading"
-      className="relative border-b border-border-subtle py-12 md:py-24 glow-mesh"
+      className="relative overflow-hidden border-b border-border-subtle py-12 md:py-24 glow-mesh vignette"
     >
-      <div className="mx-auto w-full max-w-container-content px-[var(--container-padding)]">
-        <div className="grid items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
-          <MotionHero className="flex flex-col gap-6 md:gap-8">
-            <MotionHeroItem>
-              <Heading variant="overline" tone="accent" id="hero-eyebrow">
-                {eyebrow}
-              </Heading>
-            </MotionHeroItem>
-            <MotionHeroItem>
-              <Heading variant="display" as="h1" id="hero-heading">
-                {profile.name}
-              </Heading>
-            </MotionHeroItem>
-            <MotionHeroItem>
-              <p className="font-heading text-h3 text-accent text-balance">
-                {profile.title}
-              </p>
-            </MotionHeroItem>
-            <MotionHeroItem>
-              <OpenToWorkIndicator />
-            </MotionHeroItem>
-            <MotionHeroItem>
-              <p className="max-w-xl text-body-lg text-muted text-pretty">
-                {profile.tagline}
-              </p>
-            </MotionHeroItem>
-            {profile.expertiseAreas.length > 0 ? (
-              <MotionHeroItem>
-                <ul
-                  className="flex max-w-full flex-wrap gap-2"
-                  aria-label="Areas of expertise"
-                >
-                  {profile.expertiseAreas.map((area) => (
-                    <li key={area} className="max-w-full min-w-0">
-                      <Tag
-                        variant="accent"
-                        className="max-w-full whitespace-normal break-words"
-                      >
-                        {area}
-                      </Tag>
-                    </li>
-                  ))}
-                </ul>
-              </MotionHeroItem>
-            ) : null}
-            <MotionHeroItem>
-              <div className="flex flex-wrap gap-3 pt-2">
-                <Button asChild size="lg">
-                  <Link href="/projects">View Projects</Link>
-                </Button>
-                <Button asChild variant="secondary" size="lg">
-                  <Link href="/contact">Get in Touch</Link>
-                </Button>
-              </div>
-            </MotionHeroItem>
-          </MotionHero>
+      {/* Background Grid & Vignette Mask */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-25 scanlines-bg"
+        aria-hidden
+      />
+      <div
+        className="pointer-events-none absolute inset-0 opacity-60 vignette-edge"
+        aria-hidden
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 60% at 75% 50%, rgba(255,70,85,0.08), transparent 60%)",
+        }}
+      />
 
+      <div className="relative mx-auto w-full max-w-container-content px-[var(--container-padding)]">
+        <div className="grid items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
+          {/* Left: Text & Readouts (wrapped in client parallax) */}
+          <HeroParallaxWrapper>
+            <MotionHero className="flex flex-col gap-6 md:gap-8">
+              <MotionHeroItem>
+                <div className="flex items-center gap-3">
+                  <span className="h-px w-8 bg-accent" aria-hidden />
+                  <TypingCallsign text={callsignText} />
+                </div>
+              </MotionHeroItem>
+              <MotionHeroItem>
+                <Heading
+                  variant="display"
+                  as="h1"
+                  id="hero-heading"
+                  className="text-[clamp(2.5rem,6vw,5rem)] leading-[0.95] md:leading-[1]"
+                >
+                  {profile.name}
+                </Heading>
+              </MotionHeroItem>
+              <MotionHeroItem>
+                <p className="font-heading text-h3 text-accent text-balance">
+                  {profile.title}
+                </p>
+              </MotionHeroItem>
+              <MotionHeroItem>
+                <OpenToWorkIndicator />
+              </MotionHeroItem>
+              <MotionHeroItem>
+                <p className="max-w-xl text-body-lg text-muted text-pretty">
+                  {profile.tagline}
+                </p>
+              </MotionHeroItem>
+              {profile.expertiseAreas.length > 0 ? (
+                <MotionHeroItem>
+                  <ul
+                    className="flex max-w-full flex-wrap gap-2"
+                    aria-label="Areas of expertise"
+                  >
+                    {profile.expertiseAreas.map((area) => (
+                      <li key={area} className="max-w-full min-w-0">
+                        <Tag
+                          variant="accent"
+                          className="max-w-full whitespace-normal break-words"
+                        >
+                          {area}
+                        </Tag>
+                      </li>
+                    ))}
+                  </ul>
+                </MotionHeroItem>
+              ) : null}
+              
+              {/* Monospace Stat Row */}
+              <MotionHeroItem>
+                <div className="grid grid-cols-3 gap-4 border-y border-border-accent/20 py-4 font-mono text-caption uppercase tracking-wider text-muted">
+                  <div>
+                    <div className="text-[0.625rem] text-text-tertiary">YRS SHIPPED</div>
+                    <div className="font-semibold text-accent mt-1">03+ Years</div>
+                  </div>
+                  <div>
+                    <div className="text-[0.625rem] text-text-tertiary">ENGINES</div>
+                    <div className="font-semibold text-foreground mt-1">UNITY · UNREAL · GODOT</div>
+                  </div>
+                  <div>
+                    <div className="text-[0.625rem] text-text-tertiary">CURRENT MISSION</div>
+                    <div className="font-semibold text-foreground mt-1">SDK & GAME DEV</div>
+                  </div>
+                </div>
+              </MotionHeroItem>
+
+              <MotionHeroItem>
+                <div className="flex flex-wrap gap-3 pt-2">
+                  <Button asChild size="lg" className="hud-clip-sm shadow-glow-crimson">
+                    <Link href="/projects">View Work →</Link>
+                  </Button>
+                  <Button asChild variant="secondary" size="lg" className="hud-clip-sm">
+                    <Link href="/contact">Contact</Link>
+                  </Button>
+                </div>
+              </MotionHeroItem>
+            </MotionHero>
+          </HeroParallaxWrapper>
+
+          {/* Right: 3D Viewport in HUD clip frame */}
           <MotionReveal className="w-full" delay={0.15}>
-            <Hero3DCanvas />
+            <div className="hud-frame glow-bleed scanlines border border-border-accent/40 bg-surface-secondary/40 shadow-hud-glow hud-clip-lg overflow-hidden relative aspect-square md:aspect-[4/5] w-full">
+              <span className="hud-frame-bl" aria-hidden />
+              <span className="hud-frame-br" aria-hidden />
+              
+              <div className="pointer-events-none absolute left-4 top-3 z-20 font-mono text-[0.625rem] uppercase tracking-widest text-accent/80">
+                AVATAR.3D
+              </div>
+              <div className="pointer-events-none absolute right-4 bottom-3 z-20 font-mono text-[0.625rem] uppercase tracking-widest text-success">
+                STATUS: ACTIVE
+              </div>
+              
+              <ClientHero3DCanvas />
+            </div>
           </MotionReveal>
         </div>
       </div>

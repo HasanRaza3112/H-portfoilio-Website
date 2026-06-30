@@ -1,6 +1,9 @@
 import { EngineeringLogCardLink } from "@/components/shared/engineering-log-card";
 import { MotionReveal } from "@/components/shared/motion-reveal";
-import { ProjectCardLink } from "@/components/shared/project-card";
+import {
+  FeaturedProjectCard,
+  ProjectCardLink,
+} from "@/components/shared/project-card";
 import { SectionLink } from "@/components/shared/section-link";
 import { Section } from "@/components/layout/section";
 import type { EngineeringLogCard, ProjectCard } from "@/types";
@@ -11,29 +14,56 @@ interface FeaturedProjectsSectionProps {
 
 export function FeaturedProjectsSection({ projects }: FeaturedProjectsSectionProps) {
   if (projects.length === 0) {
-    return null;
+    return (
+      <Section
+        id="featured-projects"
+        aria-labelledby="featured-projects-heading"
+        divider="top"
+        eyebrow="SECTION.02 · MISSIONS"
+        title="FEATURED WORK"
+        titleId="featured-projects-heading"
+      >
+        <div className="flex h-40 items-center justify-center border border-dashed border-border-accent/40 bg-surface-secondary/20 p-6">
+          <p className="font-mono text-caption uppercase tracking-widest text-accent">
+            NO MISSIONS LOGGED
+          </p>
+        </div>
+      </Section>
+    );
   }
+
+  const hero = projects[0]!;
+  const rest = projects.slice(1);
 
   return (
     <Section
       id="featured-projects"
       aria-labelledby="featured-projects-heading"
       divider="top"
-      eyebrow="Featured Work"
-      title="Featured Projects"
+      eyebrow="SECTION.02 · MISSIONS"
+      title="FEATURED WORK"
       titleId="featured-projects-heading"
       description="Case studies across gameplay systems, SDK work, and shipped titles."
     >
       <div className="mb-8 flex justify-end">
         <SectionLink href="/projects" label="View all projects" />
       </div>
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {projects.map((project, index) => (
-          <MotionReveal key={project._id} delay={index * 0.06} className="h-full">
-            <ProjectCardLink project={project} priorityImage={index === 0} />
-          </MotionReveal>
-        ))}
-      </div>
+
+      {/* Cinematic wide featured project */}
+      <MotionReveal className="mb-8">
+        <FeaturedProjectCard project={hero} priorityImage />
+      </MotionReveal>
+
+      {/* Remaining projects grid */}
+      {rest.length > 0 ? (
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {rest.map((project, index) => (
+            <MotionReveal key={project._id} delay={index * 0.06} className="h-full">
+              <ProjectCardLink project={project} />
+            </MotionReveal>
+          ))}
+        </div>
+      ) : null}
     </Section>
   );
 }

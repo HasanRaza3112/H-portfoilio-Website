@@ -1,18 +1,125 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useCallback, useEffect, useState } from "react";
-
+import { Suspense, useRef, useState, useEffect, type ReactNode, Component } from "react";
+import type { Group, Mesh } from "three";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { useGLTF, useAnimations, Environment, ContactShadows } from "@react-three/drei";
 import { cn } from "@/lib/utils";
 
-const Spline = dynamic(() => import("@splinetool/react-spline"), {
-  ssr: false,
-  loading: () => <Hero3DLoadingState />,
-});
+const MODEL_URL = process.env.NEXT_PUBLIC_HERO_MODEL_URL?.trim() || "/models/avatar.glb";
 
-const SPLINE_SCENE_URL = process.env.NEXT_PUBLIC_SPLINE_HERO_URL?.trim() ?? "";
-const SPLINE_EMBED_URL =
-  process.env.NEXT_PUBLIC_SPLINE_HERO_EMBED_URL?.trim() ?? "";
+interface ErrorBoundaryProps {
+  fallback: ReactNode;
+  children: ReactNode;
+}
+
+interface ErrorBoundaryState {
+  hasError: boolean;
+}
+
+class ThreeErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  public override state: ErrorBoundaryState = {
+    hasError: false,
+  };
+
+  public static getDerivedStateFromError(): ErrorBoundaryState {
+    return { hasError: true };
+  }
+
+  public override componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error("ThreeErrorBoundary caught loading error:", error, errorInfo);
+  }
+
+  public override render() {
+    if (this.state.hasError) {
+      return this.props.fallback;
+    }
+
+    return this.props.children;
+  }
+}
+
+function FallbackMesh({ reducedMotion }: { reducedMotion: boolean }) {
+  const meshRef = useRef<Mesh>(null);
+
+  useFrame((_state: unknown, delta: number) => {
+    if (meshRef.current && !reducedMotion) {
+      meshRef.current.rotation.y += delta * 0.5;
+      meshRef.current.rotation.x += delta * 0.2;
+    }
+  });
+
+  return (
+    <mesh ref={meshRef} position={[0, 0, 0]} scale={1.2}>
+      <icosahedronGeometry args={[1, 1]} />
+      <meshBasicMaterial color="#ff4655" wireframe />
+    </mesh>
+  );
+}
+
+function AvatarModel({ url, reducedMotion }: { url: string; reducedMotion: boolean }) {
+  const group = useRef<Group>(null);
+  const { scene, animations } = useGLTF(url);
+  const { actions, names } = useAnimations(animations, group);
+
+  useEffect(() => {
+    const firstName = names[0];
+    if (firstName && actions[firstName] && !reducedMotion) {
+      actions[firstName]?.reset().fadeIn(0.4).play();
+    }
+    return () => {
+      const firstName = names[0];
+      if (firstName && actions[firstName]) {
+        actions[firstName]?.fadeOut(0.4);
+      }
+    };
+  }, [actions, names, reducedMotion]);
+
+  useFrame((_state: unknown, delta: number) => {
+    if (group.current && !reducedMotion) {
+      group.current.rotation.y += delta * 0.25; // slow autorotate
+    }
+  });
+
+  return (
+    <group ref={group} dispose={null}>
+      <primitive object={scene} scale={1.6} position={[0, -1.2, 0]} />
+    </group>
+  );
+}
+
+function Scene({ reducedMotion }: { reducedMotion: boolean }) {
+  return (
+    <>
+      <ambientLight intensity={0.4} />
+      <directionalLight
+        position={[3, 4, 5]}
+        intensity={1.2}
+        color="#ff6e7a"
+      />
+      <directionalLight
+        position={[-4, 2, -3]}
+        intensity={0.6}
+        color="#4a6fff"
+      />
+      <pointLight position={[2, 2, 2]} intensity={1.5} color="#ff4655" />
+      <ThreeErrorBoundary fallback={<FallbackMesh reducedMotion={reducedMotion} />}>
+        <Suspense fallback={<FallbackMesh reducedMotion={reducedMotion} />}>
+          <AvatarModel url={MODEL_URL} reducedMotion={reducedMotion} />
+        </Suspense>
+      </ThreeErrorBoundary>
+      <Environment preset="city" />
+      <ContactShadows
+        position={[0, -1.2, 0]}
+        opacity={0.6}
+        scale={8}
+        blur={2}
+        far={4}
+        color="#ff4655"
+      />
+    </>
+  );
+}
 
 function Hero3DLoadingState() {
   return (
@@ -25,39 +132,8 @@ function Hero3DLoadingState() {
         Loading 3D Scene…
       </p>
       <p className="text-center font-mono text-[0.625rem] text-muted">
-        {`AVATAR.SYS · RENDER_INIT`}
+        AVATAR.SYS · RENDER_INIT
       </p>
-    </div>
-  );
-}
-
-function Hero3DFallback() {
-  if (SPLINE_EMBED_URL) {
-    return (
-      <iframe
-        src={SPLINE_EMBED_URL}
-        title="3D Developer Avatar"
-        className="h-full w-full border-0"
-        loading="lazy"
-        allow="fullscreen"
-      />
-    );
-  }
-
-  return (
-    <div className="flex h-full w-full flex-col items-center justify-center gap-3 border border-dashed border-border-accent bg-surface-secondary/60 p-6 text-center">
-      <span className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-accent">
-        {`3D_SCENE.PENDING`}
-      </span>
-      <p className="max-w-xs font-mono text-caption text-muted">
-        Set <code className="text-accent">NEXT_PUBLIC_SPLINE_HERO_URL</code> or{" "}
-        <code className="text-accent">NEXT_PUBLIC_SPLINE_HERO_EMBED_URL</code>{" "}
-        to load the zombie developer model.
-      </p>
-      <div
-        className="mt-2 h-32 w-32 rounded-full border border-accent/40 bg-accent-subtle shadow-glow-red"
-        aria-hidden
-      />
     </div>
   );
 }
@@ -67,67 +143,53 @@ interface Hero3DCanvasProps {
 }
 
 export function Hero3DCanvas({ className }: Hero3DCanvasProps) {
-  const [loadError, setLoadError] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
 
-  const handleLoad = useCallback(() => {
-    setIsLoaded(true);
-    setLoadError(false);
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReducedMotion(mediaQuery.matches);
+    const listener = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
+    mediaQuery.addEventListener("change", listener);
+    return () => mediaQuery.removeEventListener("change", listener);
   }, []);
 
   useEffect(() => {
-    if (!SPLINE_SCENE_URL || isLoaded || loadError) {
-      return;
+    try {
+      useGLTF.preload(MODEL_URL);
+    } catch {
+      /* noop */
     }
-
-    const timeout = window.setTimeout(() => {
-      setLoadError(true);
-    }, 15000);
-
-    return () => window.clearTimeout(timeout);
-  }, [isLoaded, loadError]);
-
-  const showSpline = SPLINE_SCENE_URL && !loadError;
+  }, []);
 
   return (
     <div
-      className={cn("hero-viewport-panel relative w-full", className)}
+      className={cn(
+        "relative z-0 w-full overflow-hidden bg-surface-secondary/40",
+        "aspect-square md:aspect-auto md:h-[500px]",
+        className,
+      )}
       aria-label="3D developer avatar"
     >
-      <span
-        className="pointer-events-none absolute top-3 left-4 z-20 font-mono text-[0.625rem] uppercase tracking-widest text-accent/80"
-        aria-hidden
-      >
-        {`AVATAR.3D`}
-      </span>
       <span
         className="pointer-events-none absolute top-3 right-4 z-20 font-mono text-[0.625rem] uppercase tracking-widest text-muted"
         aria-hidden
       >
         RENDER.LIVE
       </span>
-
-      <div className="hero-viewport-grid pointer-events-none absolute inset-0 z-10" aria-hidden />
-
       <div
-        className={cn(
-          "relative z-0 w-full overflow-hidden bg-surface-secondary/40",
-          "aspect-square md:aspect-auto md:h-[500px]",
-        )}
-      >
-        {!showSpline ? (
-          <Hero3DFallback />
-        ) : (
-          <>
-            {!isLoaded ? <Hero3DLoadingState /> : null}
-            <Spline
-              scene={SPLINE_SCENE_URL}
-              className={cn("h-full w-full", !isLoaded && "sr-only")}
-              onLoad={handleLoad}
-            />
-          </>
-        )}
-      </div>
+        className="hero-viewport-grid pointer-events-none absolute inset-0 z-10"
+        aria-hidden
+      />
+      <Suspense fallback={<Hero3DLoadingState />}>
+        <Canvas
+          camera={{ position: [0, 1.2, 3], fov: 35 }}
+          dpr={[1, 2]}
+          gl={{ antialias: true, alpha: true }}
+          style={{ background: "transparent" }}
+        >
+          <Scene reducedMotion={reducedMotion} />
+        </Canvas>
+      </Suspense>
     </div>
   );
 }
