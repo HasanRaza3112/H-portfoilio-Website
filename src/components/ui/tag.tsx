@@ -15,8 +15,8 @@ const tagVariants = cva(
         mono: "border-border-subtle bg-surface font-mono text-caption text-muted-foreground",
       },
       size: {
-        default: "h-7",
-        sm: "h-6 px-2 text-[0.6875rem]",
+        default: "min-h-7 py-1",
+        sm: "min-h-6 py-0.5 px-2 text-[0.6875rem]",
       },
     },
     defaultVariants: {
