@@ -94,7 +94,7 @@ export function SiteFooter() {
         <div className="flex flex-col gap-2">
           <span className="flex items-center gap-2 font-mono text-body-sm font-semibold uppercase tracking-widest text-foreground">
             <span className="pulse-signal-square" aria-hidden />
-            HR_//
+            MAX
           </span>
           <p className="max-w-xs text-body-sm text-muted">
             {BRAND.tagline}
@@ -117,7 +117,7 @@ export function SiteFooter() {
           </ul>
         </div>
 
-        {/* Col 3: Socials as HUD chips + signal line */}
+        {/* Col 3: Socials as HUD chips */}
         <div className="flex flex-col gap-4 md:items-end">
           <span className="font-mono text-[0.625rem] uppercase tracking-[0.2em] text-accent">
             COMMS.CHANNELS
@@ -137,18 +137,13 @@ export function SiteFooter() {
               </li>
             ))}
           </ul>
-          
-          <div className="flex items-center gap-2 font-mono text-[0.625rem] uppercase tracking-widest text-muted mt-2">
-            <span className="pulse-signal-square" aria-hidden />
-            SIGNAL · ONLINE · BUILD v1.0.0 · NODE 20
-          </div>
         </div>
       </Container>
 
       {/* Bottom strip */}
       <div className="border-t border-border-subtle mt-10 pt-6">
         <Container className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between font-mono text-caption text-text-tertiary">
-          <p>© {year} HASAN RAZA — ALL SYSTEMS NOMINAL</p>
+          <p>© {year} Hasan Raza</p>
           <nav aria-label="CMS Navigation">
             <ul className="flex gap-4">
               <li>

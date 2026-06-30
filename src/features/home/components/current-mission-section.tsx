@@ -73,42 +73,38 @@ export function CurrentMissionSection({ mission }: CurrentMissionSectionProps) {
       id="current-mission"
       aria-labelledby="current-mission-heading"
       divider="top"
-      eyebrow="SECTION.03 · SYSTEM_STATUS"
+      eyebrow="SECTION.03 · STATUS"
       title="Current Mission"
       titleId="current-mission-heading"
     >
       <div className="grid gap-10 md:grid-cols-5 md:gap-12 lg:gap-16">
         {/* LEFT (col-span-2, sticky): STATUS PANEL */}
         <aside className="md:col-span-2">
-          <MotionReveal className="hud-frame relative border border-border-accent/40 bg-surface-secondary/40 p-6 shadow-panel hud-clip-sm md:sticky md:top-24">
+          <MotionReveal className="hud-frame relative border border-border-accent/40 liquid-glass p-6 shadow-panel hud-clip-sm md:sticky md:top-24">
             <span className="hud-frame-bl" aria-hidden />
             <span className="hud-frame-br" aria-hidden />
             
-            <h3 className="font-mono text-[0.75rem] font-bold uppercase tracking-[0.2em] text-accent mb-6 border-b border-border-accent/20 pb-2">
-              SYSTEM.STATUS
-            </h3>
-            
             <dl className="space-y-4 font-mono text-caption uppercase tracking-wider text-muted">
-              <div className="flex items-center justify-between border-b border-border-subtle pb-2">
-                <dt className="text-text-tertiary">YEARS.SHIPPING</dt>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 border-b border-border-subtle pb-2">
+                <dt className="text-text-tertiary">Years Experience</dt>
                 <dd className="text-foreground">
                   :: <ShippingYearsCounter />
                 </dd>
               </div>
-              <div className="flex items-center justify-between border-b border-border-subtle pb-2">
-                <dt className="text-text-tertiary">ENGINES</dt>
-                <dd className="text-foreground text-right">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 border-b border-border-subtle pb-2">
+                <dt className="text-text-tertiary">Engines</dt>
+                <dd className="text-foreground text-right sm:max-w-[65%] break-words">
                   :: <span className="text-accent font-semibold">UNITY · UNREAL · GODOT</span>
                 </dd>
               </div>
-              <div className="flex items-center justify-between border-b border-border-subtle pb-2">
-                <dt className="text-text-tertiary">LOCATION</dt>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 border-b border-border-subtle pb-2">
+                <dt className="text-text-tertiary">Location</dt>
                 <dd className="text-foreground">
                   :: REMOTE
                 </dd>
               </div>
-              <div className="flex items-center justify-between">
-                <dt className="text-text-tertiary">STATUS</dt>
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                <dt className="text-text-tertiary">Status</dt>
                 <dd className="text-success font-semibold flex items-center gap-1.5">
                   :: AVAILABLE
                   <span className="relative flex size-2" aria-hidden>

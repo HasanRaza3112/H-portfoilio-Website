@@ -40,7 +40,6 @@ function OpenToWorkIndicator() {
 
 export function HeroSection({ data }: HeroSectionProps) {
   const profile = resolvePersonProfile(data?.personProfile);
-  const callsignText = `CALLSIGN · ${profile.name.toUpperCase().replace(/\s+/g, ".")}`;
 
   return (
     <section
@@ -69,7 +68,7 @@ export function HeroSection({ data }: HeroSectionProps) {
               <MotionHeroItem>
                 <div className="flex items-center gap-3">
                   <span className="h-px w-8 bg-accent" aria-hidden />
-                  <TypingCallsign text={callsignText} />
+                  <TypingCallsign text={profile.name.toUpperCase()} />
                 </div>
               </MotionHeroItem>
               <MotionHeroItem>
@@ -115,9 +114,9 @@ export function HeroSection({ data }: HeroSectionProps) {
                 </MotionHeroItem>
               ) : null}
               
-              {/* Monospace Stat Row */}
+              {/* Responsive Monospace Stat Row */}
               <MotionHeroItem>
-                <div className="grid grid-cols-3 gap-4 border-y border-border-accent/20 py-4 font-mono text-caption uppercase tracking-wider text-muted">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 border-y border-border-accent/20 py-4 font-mono text-caption uppercase tracking-wider text-muted">
                   <div>
                     <div className="text-[0.625rem] text-text-tertiary">YRS SHIPPED</div>
                     <div className="font-semibold text-accent mt-1">03+ Years</div>
@@ -146,18 +145,11 @@ export function HeroSection({ data }: HeroSectionProps) {
             </MotionHero>
           </HeroParallaxWrapper>
 
-          {/* Right: 3D Viewport in HUD clip frame */}
+          {/* Right: 3D Viewport in Liquid Glass frame */}
           <MotionReveal className="w-full" delay={0.15}>
-            <div className="hud-frame glow-bleed scanlines border border-border-accent/40 bg-surface-secondary/40 shadow-hud-glow hud-clip-lg overflow-hidden relative aspect-square md:aspect-[4/5] w-full">
+            <div className="hud-frame glow-bleed scanlines liquid-glass border border-border-accent/40 shadow-hud-glow hud-clip-lg overflow-hidden relative aspect-square md:aspect-[4/5] w-full">
               <span className="hud-frame-bl" aria-hidden />
               <span className="hud-frame-br" aria-hidden />
-              
-              <div className="pointer-events-none absolute left-4 top-3 z-20 font-mono text-[0.625rem] uppercase tracking-widest text-accent/80">
-                AVATAR.3D
-              </div>
-              <div className="pointer-events-none absolute right-4 bottom-3 z-20 font-mono text-[0.625rem] uppercase tracking-widest text-success">
-                STATUS: ACTIVE
-              </div>
               
               <ClientHero3DCanvas />
             </div>

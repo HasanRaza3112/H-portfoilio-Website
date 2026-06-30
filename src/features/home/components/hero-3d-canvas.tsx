@@ -6,7 +6,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, useAnimations, Environment, ContactShadows } from "@react-three/drei";
 import { cn } from "@/lib/utils";
 
-const MODEL_URL = process.env.NEXT_PUBLIC_HERO_MODEL_URL?.trim() || "/models/avatar.glb";
+const MODEL_URL = "/models/avatar.glb";
 
 interface ErrorBoundaryProps {
   fallback: ReactNode;
@@ -131,9 +131,6 @@ function Hero3DLoadingState() {
       <p className="font-mono text-caption uppercase tracking-widest text-accent">
         Loading 3D Scene…
       </p>
-      <p className="text-center font-mono text-[0.625rem] text-muted">
-        AVATAR.SYS · RENDER_INIT
-      </p>
     </div>
   );
 }
@@ -170,12 +167,6 @@ export function Hero3DCanvas({ className }: Hero3DCanvasProps) {
       )}
       aria-label="3D developer avatar"
     >
-      <span
-        className="pointer-events-none absolute top-3 right-4 z-20 font-mono text-[0.625rem] uppercase tracking-widest text-muted"
-        aria-hidden
-      >
-        RENDER.LIVE
-      </span>
       <div
         className="hero-viewport-grid pointer-events-none absolute inset-0 z-10"
         aria-hidden
