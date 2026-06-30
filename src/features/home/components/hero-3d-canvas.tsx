@@ -6,7 +6,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF, useAnimations, Environment, ContactShadows } from "@react-three/drei";
 import { cn } from "@/lib/utils";
 
-const MODEL_URL = "/models/avatar.glb";
+const MODEL_URL = "/models/Ronin.glb";
 
 interface ErrorBoundaryProps {
   fallback: ReactNode;

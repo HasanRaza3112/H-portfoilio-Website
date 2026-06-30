@@ -33,3 +33,6 @@ Thumbs.db
 # Sanity
 .sanity/
 tsconfig.tsbuildinfo
+
+# Large 3D Assets
+public/models/*.glb
