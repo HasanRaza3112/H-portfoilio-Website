@@ -1,89 +1,78 @@
 "use client";
 
-import { Suspense, useRef, useState, useEffect, type ReactNode, Component } from "react";
-import type { Group, Mesh } from "three";
+import { useRef, useState, useEffect } from "react";
+import type { Group } from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useGLTF, useAnimations, Environment, ContactShadows } from "@react-three/drei";
+import { Environment, ContactShadows } from "@react-three/drei";
 import { cn } from "@/lib/utils";
 
-const MODEL_URL = "/models/Ronin.glb";
+/**
+ * Procedural 3D PS5 Console rendered using Three.js primitive geometries.
+ * Highly stylized, lightweight, and loads instantly with no external assets.
+ */
+function PS5Console({ reducedMotion }: { reducedMotion: boolean }) {
+  const groupRef = useRef<Group>(null);
 
-interface ErrorBoundaryProps {
-  fallback: ReactNode;
-  children: ReactNode;
-}
-
-interface ErrorBoundaryState {
-  hasError: boolean;
-}
-
-class ThreeErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  public override state: ErrorBoundaryState = {
-    hasError: false,
-  };
-
-  public static getDerivedStateFromError(): ErrorBoundaryState {
-    return { hasError: true };
-  }
-
-  public override componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error("ThreeErrorBoundary caught loading error:", error, errorInfo);
-  }
-
-  public override render() {
-    if (this.state.hasError) {
-      return this.props.fallback;
-    }
-
-    return this.props.children;
-  }
-}
-
-function FallbackMesh({ reducedMotion }: { reducedMotion: boolean }) {
-  const meshRef = useRef<Mesh>(null);
-
-  useFrame((_state: unknown, delta: number) => {
-    if (meshRef.current && !reducedMotion) {
-      meshRef.current.rotation.y += delta * 0.5;
-      meshRef.current.rotation.x += delta * 0.2;
+  useFrame((state, delta) => {
+    if (groupRef.current && !reducedMotion) {
+      // Slow rotation on Y axis
+      groupRef.current.rotation.y += delta * 0.45;
+      // Gentle floating animation
+      groupRef.current.position.y = Math.sin(state.clock.getElapsedTime() * 1.2) * 0.08;
     }
   });
 
   return (
-    <mesh ref={meshRef} position={[0, 0, 0]} scale={1.2}>
-      <icosahedronGeometry args={[1, 1]} />
-      <meshBasicMaterial color="#ff4655" wireframe />
-    </mesh>
-  );
-}
+    <group ref={groupRef} position={[0, 0, 0]} scale={1.15}>
+      {/* Circular Base / Stand */}
+      <mesh position={[0, -1.02, 0]}>
+        <cylinderGeometry args={[0.5, 0.52, 0.05, 32]} />
+        <meshStandardMaterial color="#0b0b0e" roughness={0.6} metalness={0.2} />
+      </mesh>
 
-function AvatarModel({ url, reducedMotion }: { url: string; reducedMotion: boolean }) {
-  const group = useRef<Group>(null);
-  const { scene, animations } = useGLTF(url);
-  const { actions, names } = useAnimations(animations, group);
+      {/* Center Black Glossy Body */}
+      <mesh position={[0, 0.05, 0]}>
+        <boxGeometry args={[0.22, 2.0, 0.85]} />
+        <meshStandardMaterial
+          color="#08080b"
+          roughness={0.15}
+          metalness={0.85}
+        />
+      </mesh>
 
-  useEffect(() => {
-    const firstName = names[0];
-    if (firstName && actions[firstName] && !reducedMotion) {
-      actions[firstName]?.reset().fadeIn(0.4).play();
-    }
-    return () => {
-      const firstName = names[0];
-      if (firstName && actions[firstName]) {
-        actions[firstName]?.fadeOut(0.4);
-      }
-    };
-  }, [actions, names, reducedMotion]);
+      {/* Left White Panel (flared and offset slightly) */}
+      <mesh position={[-0.14, 0.08, 0.02]} rotation={[0.02, 0.01, 0.03]}>
+        <boxGeometry args={[0.03, 2.1, 0.9]} />
+        <meshStandardMaterial
+          color="#f3f3f6"
+          roughness={0.35}
+          metalness={0.05}
+        />
+      </mesh>
 
-  useFrame((_state: unknown, delta: number) => {
-    if (group.current && !reducedMotion) {
-      group.current.rotation.y += delta * 0.25; // slow autorotate
-    }
-  });
+      {/* Right White Panel (flared and offset slightly) */}
+      <mesh position={[0.14, 0.08, -0.02]} rotation={[-0.02, -0.01, -0.03]}>
+        <boxGeometry args={[0.03, 2.1, 0.9]} />
+        <meshStandardMaterial
+          color="#f3f3f6"
+          roughness={0.35}
+          metalness={0.05}
+        />
+      </mesh>
 
-  return (
-    <group ref={group} dispose={null}>
-      <primitive object={scene} scale={1.6} position={[0, -1.2, 0]} />
+      {/* Internal Blue LED Glow strips on the front */}
+      <mesh position={[0.08, 0.05, 0.43]}>
+        <boxGeometry args={[0.008, 1.8, 0.008]} />
+        <meshBasicMaterial color="#0055ff" />
+      </mesh>
+      <mesh position={[-0.08, 0.05, 0.43]}>
+        <boxGeometry args={[0.008, 1.8, 0.008]} />
+        <meshBasicMaterial color="#0055ff" />
+      </mesh>
+
+      {/* Blue Light Source to cast glow on the white panels */}
+      <pointLight position={[0, 0.2, 0.35]} distance={1.5} intensity={4} color="#0066ff" />
+      <pointLight position={[0, -0.2, -0.35]} distance={1.5} intensity={2} color="#0044ff" />
     </group>
   );
 }
@@ -91,47 +80,31 @@ function AvatarModel({ url, reducedMotion }: { url: string; reducedMotion: boole
 function Scene({ reducedMotion }: { reducedMotion: boolean }) {
   return (
     <>
-      <ambientLight intensity={0.4} />
+      <ambientLight intensity={0.5} />
       <directionalLight
-        position={[3, 4, 5]}
-        intensity={1.2}
+        position={[4, 5, 6]}
+        intensity={1.5}
         color="#ff6e7a"
       />
       <directionalLight
-        position={[-4, 2, -3]}
-        intensity={0.6}
+        position={[-5, 3, -4]}
+        intensity={0.8}
         color="#4a6fff"
       />
-      <pointLight position={[2, 2, 2]} intensity={1.5} color="#ff4655" />
-      <ThreeErrorBoundary fallback={<FallbackMesh reducedMotion={reducedMotion} />}>
-        <Suspense fallback={<FallbackMesh reducedMotion={reducedMotion} />}>
-          <AvatarModel url={MODEL_URL} reducedMotion={reducedMotion} />
-        </Suspense>
-      </ThreeErrorBoundary>
+      <pointLight position={[3, 3, 3]} intensity={2.0} color="#ff4655" />
+      
+      <PS5Console reducedMotion={reducedMotion} />
+      
       <Environment preset="city" />
       <ContactShadows
-        position={[0, -1.2, 0]}
-        opacity={0.6}
-        scale={8}
-        blur={2}
-        far={4}
+        position={[0, -1.02, 0]}
+        opacity={0.75}
+        scale={6}
+        blur={1.8}
+        far={3}
         color="#ff4655"
       />
     </>
-  );
-}
-
-function Hero3DLoadingState() {
-  return (
-    <div
-      className="flex h-full w-full flex-col items-center justify-center gap-4 bg-surface-secondary/80 p-6"
-      aria-hidden
-    >
-      <div className="size-10 animate-pulse rounded-full border-2 border-accent border-t-transparent" />
-      <p className="font-mono text-caption uppercase tracking-widest text-accent">
-        Loading 3D Scene…
-      </p>
-    </div>
   );
 }
 
@@ -150,14 +123,6 @@ export function Hero3DCanvas({ className }: Hero3DCanvasProps) {
     return () => mediaQuery.removeEventListener("change", listener);
   }, []);
 
-  useEffect(() => {
-    try {
-      useGLTF.preload(MODEL_URL);
-    } catch {
-      /* noop */
-    }
-  }, []);
-
   return (
     <div
       className={cn(
@@ -165,22 +130,20 @@ export function Hero3DCanvas({ className }: Hero3DCanvasProps) {
         "aspect-square md:aspect-auto md:h-[500px]",
         className,
       )}
-      aria-label="3D developer avatar"
+      aria-label="3D PS5 console model"
     >
       <div
         className="hero-viewport-grid pointer-events-none absolute inset-0 z-10"
         aria-hidden
       />
-      <Suspense fallback={<Hero3DLoadingState />}>
-        <Canvas
-          camera={{ position: [0, 1.2, 3], fov: 35 }}
-          dpr={[1, 2]}
-          gl={{ antialias: true, alpha: true }}
-          style={{ background: "transparent" }}
-        >
-          <Scene reducedMotion={reducedMotion} />
-        </Canvas>
-      </Suspense>
+      <Canvas
+        camera={{ position: [0, 0.6, 2.6], fov: 45 }}
+        dpr={[1, 2]}
+        gl={{ antialias: true, alpha: true }}
+        style={{ background: "transparent" }}
+      >
+        <Scene reducedMotion={reducedMotion} />
+      </Canvas>
     </div>
   );
 }

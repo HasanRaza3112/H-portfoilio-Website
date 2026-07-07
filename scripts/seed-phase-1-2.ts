@@ -255,6 +255,9 @@ async function main() {
       challenges: [...project.challenges],
       solutions: [...project.solutions],
       lessonsLearned: [...project.lessonsLearned],
+      githubUrl: "githubUrl" in project ? project.githubUrl : undefined,
+      playableUrl: "playableUrl" in project ? project.playableUrl : undefined,
+      appStoreUrl: "appStoreUrl" in project ? (project as any).appStoreUrl : undefined,
       featured: project.featured,
       featuredRank: project.featuredRank,
       relatedEngineeringLogs: project.relatedEngineeringLogIds.map((logId) => ({

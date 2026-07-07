@@ -50,6 +50,9 @@ export const SEED_PROJECTS = [
     featuredRank: 1,
     relatedEngineeringLogIds: [] as string[],
     publishedAt: "2026-03-15T10:00:00.000Z",
+    githubUrl: "https://github.com/HasanRaza3112/QuizVerse",
+    playableUrl: "https://play.google.com/store/apps/details?id=com.intelliverse.quizverse&pcampaignid=web_share",
+    appStoreUrl: "https://apps.apple.com/us/app/quizverse-live-trivia/id6752571885",
   },
   {
     _id: "project-cricketx",
@@ -84,6 +87,8 @@ export const SEED_PROJECTS = [
     featuredRank: 2,
     relatedEngineeringLogIds: [] as string[],
     publishedAt: "2026-04-01T10:00:00.000Z",
+    githubUrl: "https://github.com/HasanRaza3112/CricketX",
+    playableUrl: "https://play.google.com/store/apps/details?id=com.IntelliverseX.CricketX&pcampaignid=web_share",
   },
   {
     _id: "project-colorcrush2d",
@@ -111,6 +116,8 @@ export const SEED_PROJECTS = [
     featuredRank: 4,
     relatedEngineeringLogIds: ["engineeringLog-colorcrush-sdk"],
     publishedAt: "2026-04-15T10:00:00.000Z",
+    githubUrl: "https://github.com/HasanRaza3112/ColorCrush2D",
+    playableUrl: "https://play.google.com/store/apps/details?id=com.com.IntelliverseX.ColorCrush2D&pcampaignid=web_share",
   },
   {
     _id: "project-level-rotator",
@@ -138,6 +145,7 @@ export const SEED_PROJECTS = [
     featuredRank: 5,
     relatedEngineeringLogIds: [] as string[],
     publishedAt: "2026-05-01T10:00:00.000Z",
+    githubUrl: "https://github.com/HasanRaza3112/Level-Rotator",
   },
   {
     _id: "project-cross-platform-sdks",
@@ -174,6 +182,7 @@ export const SEED_PROJECTS = [
     featuredRank: 3,
     relatedEngineeringLogIds: ["engineeringLog-playables-pipeline"],
     publishedAt: "2026-05-20T10:00:00.000Z",
+    githubUrl: "https://github.com/HasanRaza3112/H-portfoilio-Website",
   },
   {
     _id: "project-galaxy-strike",
@@ -196,6 +205,8 @@ export const SEED_PROJECTS = [
     featuredRank: 10,
     relatedEngineeringLogIds: [] as string[],
     publishedAt: "2025-08-01T10:00:00.000Z",
+    githubUrl: "https://github.com/HasanRaza3112/Galaxy-Strike",
+    playableUrl: "https://maxy3112.itch.io/galaxy-strike",
   },
   {
     _id: "project-run-king-run",
@@ -223,6 +234,8 @@ export const SEED_PROJECTS = [
     featuredRank: 11,
     relatedEngineeringLogIds: [] as string[],
     publishedAt: "2025-09-01T10:00:00.000Z",
+    githubUrl: "https://github.com/HasanRaza3112/Run-King-Run",
+    playableUrl: "https://maxy3112.itch.io/eternal-sprint",
   },
   {
     _id: "project-sharpshooter-3d",
@@ -250,6 +263,8 @@ export const SEED_PROJECTS = [
     featuredRank: 12,
     relatedEngineeringLogIds: [] as string[],
     publishedAt: "2025-10-01T10:00:00.000Z",
+    githubUrl: "https://github.com/HasanRaza3112/SharpShooter3D",
+    playableUrl: "https://maxy3112.itch.io/sharpshooter-3d",
   },
   {
     _id: "project-maze-bunker",
@@ -277,6 +292,8 @@ export const SEED_PROJECTS = [
     featuredRank: 13,
     relatedEngineeringLogIds: [] as string[],
     publishedAt: "2025-11-01T10:00:00.000Z",
+    githubUrl: "https://github.com/HasanRaza3112/Maze-Bunker",
+    playableUrl: "https://maxy3112.itch.io/maze-bunker-pc",
   },
   {
     _id: "project-hrtc-bus-sim",
@@ -304,6 +321,7 @@ export const SEED_PROJECTS = [
     featuredRank: 14,
     relatedEngineeringLogIds: [] as string[],
     publishedAt: "2025-12-01T10:00:00.000Z",
+    githubUrl: "https://github.com/HasanRaza3112/HRTC-Bus-Sim",
   },
   {
     _id: "project-slender-returns",
@@ -331,6 +349,37 @@ export const SEED_PROJECTS = [
     featuredRank: 15,
     relatedEngineeringLogIds: [] as string[],
     publishedAt: "2026-01-01T10:00:00.000Z",
+    githubUrl: "https://github.com/HasanRaza3112/Slender-Returns",
+    playableUrl: "https://maxy3112.itch.io/slender-pc-version",
+  },
+  {
+    _id: "project-rocketgo",
+    slug: "rocketgo",
+    title: "RocketGo",
+    categorySlug: "game-development" as const,
+    description:
+      "Arcade rocket flight game with gravity mechanics, obstacle avoidance, and landing challenges.",
+    overview:
+      "Personal arcade rocket flight prototype with physics-based gravity mechanics and landing pad challenges.",
+    role: PERSONAL_ROLE,
+    duration: "Personal release",
+    status: "shipped" as const,
+    technologies: ["Unity 3D", "C#"],
+    challenges: [
+      "Balancing physics-based rocket thrust with gravity-assisted landing controls.",
+    ],
+    solutions: [
+      "Tuned rigidbodies and custom upward/directional thrust forces for stable gravity maneuvering.",
+    ],
+    lessonsLearned: [
+      "Physics-based flight models feel more rewarding with clear gravity indicators and landing goals.",
+    ],
+    featured: false,
+    featuredRank: 16,
+    relatedEngineeringLogIds: [] as string[],
+    publishedAt: "2026-02-01T10:00:00.000Z",
+    githubUrl: "https://github.com/HasanRaza3112/RocketGo",
+    playableUrl: "https://maxy3112.itch.io/rocketgo",
   },
 ] as const;
 
