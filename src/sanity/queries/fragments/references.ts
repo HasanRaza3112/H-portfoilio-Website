@@ -12,7 +12,10 @@ export const projectCardProjection = `
   featured,
   technologies,
   category->${categoryField},
-  featuredImage ${imageField}
+  featuredImage ${imageField},
+  githubUrl,
+  playableUrl,
+  appStoreUrl
 `;
 
 export const projectCardField = `{ ${projectCardProjection} }`;
@@ -24,8 +27,6 @@ export const projectDetailProjection = `
   challenges,
   solutions,
   lessonsLearned,
-  githubUrl,
-  playableUrl,
   featuredRank,
   publishStatus,
   publishedAt,

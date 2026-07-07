@@ -21,7 +21,10 @@ export const projectsListQuery = `
       "url": asset->url,
       alt,
       "lqip": asset->metadata.lqip
-    }
+    },
+    githubUrl,
+    playableUrl,
+    appStoreUrl
   }
 `;
 
@@ -42,6 +45,7 @@ export const projectBySlugQuery = `
     lessonsLearned,
     githubUrl,
     playableUrl,
+    appStoreUrl,
     featured,
     featuredRank,
     publishStatus,

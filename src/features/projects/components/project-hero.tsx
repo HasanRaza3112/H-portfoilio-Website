@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Code2, ExternalLink } from "lucide-react";
+import { Code2, ExternalLink, Gamepad2, Smartphone } from "lucide-react";
 
 import { SanityImage } from "@/components/shared/sanity-image";
 import { Badge } from "@/components/ui/badge";
@@ -67,8 +67,30 @@ export function ProjectHero({ project }: ProjectHeroProps) {
             {project.playableUrl ? (
               <Button asChild>
                 <Link href={project.playableUrl} target="_blank" rel="noopener noreferrer">
-                  Play / Demo
-                  <ExternalLink className="size-4" aria-hidden />
+                  {project.playableUrl.includes("itch.io") ? (
+                    <>
+                      <Gamepad2 className="size-4" aria-hidden />
+                      Play on itch.io
+                    </>
+                  ) : project.playableUrl.includes("play.google.com") ? (
+                    <>
+                      <Smartphone className="size-4" aria-hidden />
+                      Get on Play Store
+                    </>
+                  ) : (
+                    <>
+                      Play / Demo
+                      <ExternalLink className="size-4" aria-hidden />
+                    </>
+                  )}
+                </Link>
+              </Button>
+            ) : null}
+            {project.appStoreUrl ? (
+              <Button asChild>
+                <Link href={project.appStoreUrl} target="_blank" rel="noopener noreferrer">
+                  <Smartphone className="size-4" aria-hidden />
+                  Get on App Store
                 </Link>
               </Button>
             ) : null}
@@ -76,7 +98,7 @@ export function ProjectHero({ project }: ProjectHeroProps) {
               <Button asChild variant="secondary">
                 <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                   <Code2 className="size-4" aria-hidden />
-                  Source
+                  Source Code
                 </Link>
               </Button>
             ) : null}

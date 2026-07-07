@@ -23,6 +23,9 @@ export const projectCardSchema = z.object({
   technologies: z.array(z.string()).nullable().optional(),
   category: categorySchema.nullable().optional(),
   featuredImage: sanityImageSchema,
+  githubUrl: z.string().nullable().optional(),
+  playableUrl: z.string().nullable().optional(),
+  appStoreUrl: z.string().nullable().optional(),
 });
 
 export type ProjectCard = z.infer<typeof projectCardSchema>;
@@ -33,8 +36,6 @@ export const projectDetailSchema = projectCardSchema.extend({
   challenges: z.array(z.string()).nullable().optional(),
   solutions: z.array(z.string()).nullable().optional(),
   lessonsLearned: z.array(z.string()).nullable().optional(),
-  githubUrl: z.string().nullable().optional(),
-  playableUrl: z.string().nullable().optional(),
   featuredRank: z.number().nullable().optional(),
   publishStatus: publishStatusSchema.nullable().optional(),
   publishedAt: z.string().nullable().optional(),

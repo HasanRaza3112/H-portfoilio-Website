@@ -274,6 +274,13 @@ export const project = defineType({
       validation: (rule) => validUrl()(rule),
     }),
     defineField({
+      name: "appStoreUrl",
+      title: "App Store URL",
+      type: "url",
+      group: "links",
+      validation: (rule) => validUrl()(rule),
+    }),
+    defineField({
       name: "featured",
       title: "Featured",
       type: "boolean",
